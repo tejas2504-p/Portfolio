@@ -1726,6 +1726,163 @@ body {
 }
 
 /* ==========================================================================
+   CERTIFICATIONS SECTION
+   ========================================================================== */
+.certifications-section {
+    min-height: 80vh;
+    padding: 8rem 4rem;
+    position: relative;
+    background: #f8fafc;
+    box-sizing: border-box;
+    scroll-margin-top: 80px;
+}
+
+.certifications-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.certifications-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 4rem;
+    max-width: 600px;
+}
+
+.cert-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    width: 100%;
+}
+
+.cert-card {
+    padding: 2.5rem 2rem;
+    border-radius: 24px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: var(--glass-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                border-color var(--transition-fast);
+    /* Scroll reveal setup */
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Scroll reveal triggers */
+.certifications-section.active .cert-card {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.certifications-section.active .cert-card:nth-child(1) { transition-delay: 0.1s; }
+.certifications-section.active .cert-card:nth-child(2) { transition-delay: 0.3s; }
+.certifications-section.active .cert-card:nth-child(3) { transition-delay: 0.5s; }
+
+/* Icon wrappers and base SVGs */
+.cert-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.03);
+    border: 1px solid var(--glass-border);
+    color: var(--color-text-secondary);
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.cert-icon {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s ease;
+}
+
+.cert-card:hover .cert-icon {
+    transform: scale(1.1) rotate(3deg);
+}
+
+.cert-info h3 {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.cert-org {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.75rem;
+}
+
+.cert-year {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-blue);
+    padding: 0.2rem 0.6rem;
+    background: rgba(2, 132, 199, 0.06);
+    border: 1px solid rgba(2, 132, 199, 0.1);
+    border-radius: 6px;
+}
+
+/* Customized Hover Scale, Glow and Shadow animations */
+.cert-card:hover:has(.aws-glow) .aws-glow {
+    background: rgba(2, 132, 199, 0.08);
+    color: var(--color-blue);
+    border-color: rgba(2, 132, 199, 0.2);
+}
+.cert-card:hover:has(.aws-glow) {
+    transform: translateY(-8px) scale(1.04);
+    border-color: rgba(2, 132, 199, 0.25);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05), 0 0 25px rgba(2, 132, 199, 0.12);
+}
+
+.cert-card:hover:has(.meta-glow) .meta-glow {
+    background: rgba(124, 58, 237, 0.08);
+    color: var(--color-purple);
+    border-color: rgba(124, 58, 237, 0.2);
+}
+.cert-card:hover:has(.meta-glow) {
+    transform: translateY(-8px) scale(1.04);
+    border-color: rgba(124, 58, 237, 0.25);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05), 0 0 25px rgba(124, 58, 237, 0.12);
+}
+
+.cert-card:hover:has(.mongodb-glow) .mongodb-glow {
+    background: rgba(16, 185, 129, 0.08);
+    color: #10b981;
+    border-color: rgba(16, 185, 129, 0.2);
+}
+.cert-card:hover:has(.mongodb-glow) {
+    transform: translateY(-8px) scale(1.04);
+    border-color: rgba(16, 185, 129, 0.25);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05), 0 0 25px rgba(16, 185, 129, 0.12);
+}
+.cert-card:hover:has(.mongodb-glow) .cert-year {
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.06);
+    border-color: rgba(16, 185, 129, 0.1);
+}
+
+/* ==========================================================================
    RESPONSIVENESS (Media Queries)
    ========================================================================== */
 @media (max-width: 1200px) {
@@ -1845,6 +2002,15 @@ body {
     
     .projects-section {
         padding: 6rem 2.5rem;
+    }
+    
+    .certifications-section {
+        padding: 6rem 2.5rem;
+    }
+    
+    .cert-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
     }
 }
 
@@ -2037,5 +2203,19 @@ body {
     .project-actions {
         grid-template-columns: 1fr;
         gap: 0.8rem;
+    }
+    
+    .certifications-section {
+        padding: 4rem 1.5rem;
+    }
+    
+    .cert-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .cert-card {
+        padding: 2rem 1.5rem;
+        border-radius: 20px;
     }
 }
