@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // SCROLL REVEAL (INTERSECTION OBSERVER)
     // -------------------------------------------------------------
-    const revealSections = document.querySelectorAll('.about-section, .portfolio-section');
+    const revealSections = document.querySelectorAll('.about-section, .skills-section, .portfolio-section');
     
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
