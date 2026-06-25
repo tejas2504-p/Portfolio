@@ -200,4 +200,102 @@ document.addEventListener('DOMContentLoaded', () => {
             profileContainer.style.transition = 'none'; // remove delay during active hover
         });
     }
+
+    // -------------------------------------------------------------
+    // STICKY NAVBAR SCROLL ACTION
+    // -------------------------------------------------------------
+    const navbar = document.getElementById('navbar');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // -------------------------------------------------------------
+    // MOBILE NAV HAMBURGER MENU TOGGLE
+    // -------------------------------------------------------------
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const mobileNav = document.getElementById('mobile-nav');
+    
+    if (hamburgerMenu && mobileNav) {
+        hamburgerMenu.addEventListener('click', () => {
+            hamburgerMenu.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburgerMenu.contains(e.target) && !mobileNav.contains(e.target)) {
+                hamburgerMenu.classList.remove('active');
+                mobileNav.classList.remove('active');
+            }
+        });
+    }
+
+    // -------------------------------------------------------------
+    // ACTIVE SECTION SCROLLSPY & SMOOTH SCROLLING
+    // -------------------------------------------------------------
+    const navLinks = document.querySelectorAll('.nav-link');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+    const sections = document.querySelectorAll('section');
+
+    function updateActiveLink() {
+        let currentSectionId = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            // Detect if section is in viewport
+            if (window.scrollY >= (sectionTop - 150)) {
+                currentSectionId = section.getAttribute('id');
+            }
+        });
+
+        // Update desktop links
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSectionId}`) {
+                link.classList.add('active');
+            }
+        });
+
+        // Update mobile links
+        mobileLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSectionId}`) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', updateActiveLink);
+    updateActiveLink(); // Initial run
+
+    // Smooth Scroll Click Handlers
+    const allLinks = document.querySelectorAll('.nav-link, .mobile-nav-link, .logo, #view-projects');
+    
+    allLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const targetId = link.getAttribute('href');
+            if (targetId && targetId.startsWith('#')) {
+                e.preventDefault();
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    // Close mobile nav menu
+                    if (hamburgerMenu) hamburgerMenu.classList.remove('active');
+                    if (mobileNav) mobileNav.classList.remove('active');
+
+                    // Smooth scroll
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70, // accounts for header height when scrolled
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
+    });
 });
