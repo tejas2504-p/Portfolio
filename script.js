@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // SCROLL REVEAL (INTERSECTION OBSERVER)
     // -------------------------------------------------------------
-    const revealElements = document.querySelectorAll('.about-section, .skills-section, .projects-section, .experience-section, .certifications-section, .portfolio-section, .timeline-item, .cert-card');
+    const revealElements = document.querySelectorAll('.about-section, .skills-section, .projects-section, .experience-section, .certifications-section, .achievements-section, .portfolio-section, .timeline-item, .cert-card, .stat-card');
     
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -379,4 +379,44 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', updateTimelineProgress);
     // Add small delay to ensure page heights are correctly rendered
     setTimeout(updateTimelineProgress, 200);
+
+    // -------------------------------------------------------------
+    // ACHIEVEMENTS COUNTER ANIMATION
+    // -------------------------------------------------------------
+    function animateCounters() {
+        const counters = document.querySelectorAll('.stat-number');
+        const duration = 2000; // 2 seconds animation duration
+
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            const stepTime = Math.abs(Math.floor(duration / target));
+            let current = 0;
+            
+            // Handle step increments dynamically based on target value
+            const increment = target > 50 ? Math.ceil(target / 100) : 1;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    counter.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    counter.textContent = current;
+                }
+            }, Math.max(stepTime, 20));
+        });
+    }
+
+    const achievementsSection = document.querySelector('.achievements-section');
+    if (achievementsSection) {
+        const counterObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target); // only animate once
+                }
+            });
+        }, { threshold: 0.25 });
+        counterObserver.observe(achievementsSection);
+    }
 });

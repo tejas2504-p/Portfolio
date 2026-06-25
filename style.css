@@ -1881,6 +1881,163 @@ body {
     background: rgba(16, 185, 129, 0.06);
     border-color: rgba(16, 185, 129, 0.1);
 }
+}
+
+/* ==========================================================================
+   ACHIEVEMENTS SECTION
+   ========================================================================== */
+.achievements-section {
+    min-height: 70vh;
+    padding: 8rem 4rem;
+    position: relative;
+    background: #ffffff;
+    box-sizing: border-box;
+    scroll-margin-top: 80px;
+}
+
+.achievements-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.achievements-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 5rem;
+    max-width: 600px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    width: 100%;
+}
+
+.stat-card {
+    padding: 2.5rem 1.8rem;
+    border-radius: 24px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: var(--glass-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                border-color var(--transition-fast);
+    /* Scroll reveal setup */
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Scroll reveal triggers */
+.achievements-section.active .stat-card {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.achievements-section.active .stat-card:nth-child(1) { transition-delay: 0.1s; }
+.achievements-section.active .stat-card:nth-child(2) { transition-delay: 0.2s; }
+.achievements-section.active .stat-card:nth-child(3) { transition-delay: 0.3s; }
+.achievements-section.active .stat-card:nth-child(4) { transition-delay: 0.4s; }
+
+/* Glowing icon wrappers */
+.stat-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.03);
+    border: 1px solid var(--glass-border);
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.stat-icon {
+    width: 26px;
+    height: 26px;
+    transition: transform 0.3s ease;
+}
+
+/* Base states of icon glows */
+.stat-blue { color: var(--color-blue); border-color: rgba(2, 132, 199, 0.15); background: rgba(2, 132, 199, 0.05); }
+.stat-amber { color: #d97706; border-color: rgba(217, 119, 6, 0.15); background: rgba(217, 119, 6, 0.05); }
+.stat-green { color: #16a34a; border-color: rgba(22, 163, 74, 0.15); background: rgba(22, 163, 74, 0.05); }
+.stat-purple { color: var(--color-purple); border-color: rgba(124, 58, 237, 0.15); background: rgba(124, 58, 237, 0.05); }
+
+/* Card hovers: scale up slightly, border color glow, shadow */
+.stat-card:hover {
+    transform: translateY(-8px) scale(1.04);
+}
+
+.stat-card:hover:has(.stat-blue) {
+    border-color: rgba(2, 132, 199, 0.25);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05), 0 0 25px rgba(2, 132, 199, 0.12);
+}
+
+.stat-card:hover:has(.stat-amber) {
+    border-color: rgba(217, 119, 6, 0.25);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05), 0 0 25px rgba(217, 119, 6, 0.12);
+}
+
+.stat-card:hover:has(.stat-green) {
+    border-color: rgba(22, 163, 74, 0.25);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05), 0 0 25px rgba(22, 163, 74, 0.12);
+}
+
+.stat-card:hover:has(.stat-purple) {
+    border-color: rgba(124, 58, 237, 0.25);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05), 0 0 25px rgba(124, 58, 237, 0.12);
+}
+
+.stat-card:hover .stat-icon {
+    transform: scale(1.15) rotate(3deg);
+}
+
+/* Stat numbers and values styling */
+.stat-value-box {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.stat-number {
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1;
+}
+
+.stat-suffix {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-purple);
+    margin-left: 2px;
+}
+
+.stat-card:hover:has(.stat-blue) .stat-suffix {
+    color: var(--color-blue);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
 
 /* ==========================================================================
    RESPONSIVENESS (Media Queries)
@@ -2009,6 +2166,15 @@ body {
     }
     
     .cert-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    
+    .achievements-section {
+        padding: 6rem 2.5rem;
+    }
+    
+    .stats-grid {
         grid-template-columns: 1fr 1fr;
         gap: 2rem;
     }
@@ -2215,6 +2381,20 @@ body {
     }
     
     .cert-card {
+        padding: 2rem 1.5rem;
+        border-radius: 20px;
+    }
+    
+    .achievements-section {
+        padding: 4rem 1.5rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .stat-card {
         padding: 2rem 1.5rem;
         border-radius: 20px;
     }
