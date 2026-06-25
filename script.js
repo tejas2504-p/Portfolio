@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // SCROLL REVEAL (INTERSECTION OBSERVER)
     // -------------------------------------------------------------
-    const revealSections = document.querySelectorAll('.about-section, .skills-section, .portfolio-section');
+    const revealElements = document.querySelectorAll('.about-section, .skills-section, .projects-section, .experience-section, .portfolio-section, .timeline-item');
     
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -313,10 +313,70 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, {
-        threshold: 0.15 // triggers when 15% of section is visible
+        threshold: 0.15 // triggers when 15% of the element is visible
     });
 
-    revealSections.forEach(section => {
-        revealObserver.observe(section);
+    revealElements.forEach(el => {
+        revealObserver.observe(el);
     });
+
+    // -------------------------------------------------------------
+    // INTERACTIVE PROJECT CARD 3D TILT EFFECT
+    // -------------------------------------------------------------
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    projectCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left - (rect.width / 2); // offset from center
+            const y = e.clientY - rect.top - (rect.height / 2);
+            
+            // Subtle rotation degrees (max 6 deg for card tilt to feel solid and modern)
+            const rotX = -(y / (rect.height / 2)) * 6;
+            const rotY = (x / (rect.width / 2)) * 6;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.01)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            // Reset transition and position
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+            card.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)';
+        });
+        
+        card.addEventListener('mouseenter', () => {
+            card.style.transition = 'none'; // dynamic tracking response
+        });
+    });
+
+    // -------------------------------------------------------------
+    // EXPERIENCE TIMELINE PROGRESS ANIMATION
+    // -------------------------------------------------------------
+    function updateTimelineProgress() {
+        const timeline = document.querySelector('.timeline-wrapper');
+        const progressLine = document.querySelector('.timeline-line-progress');
+        
+        if (!timeline || !progressLine) return;
+        
+        const rect = timeline.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        
+        // Starts drawing when the top of the timeline is 75% up from the bottom of the viewport
+        const triggerPoint = viewportHeight * 0.75;
+        const timelineTop = rect.top;
+        const timelineHeight = rect.height;
+        
+        if (timelineTop < triggerPoint) {
+            const scrolledDistance = triggerPoint - timelineTop;
+            const progressPercent = Math.min(Math.max(scrolledDistance / timelineHeight, 0), 1);
+            progressLine.style.height = `${progressPercent * 100}%`;
+        } else {
+            progressLine.style.height = '0%';
+        }
+    }
+    
+    window.addEventListener('scroll', updateTimelineProgress);
+    window.addEventListener('resize', updateTimelineProgress);
+    // Add small delay to ensure page heights are correctly rendered
+    setTimeout(updateTimelineProgress, 200);
 });
