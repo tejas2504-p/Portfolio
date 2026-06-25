@@ -2178,6 +2178,15 @@ body {
         grid-template-columns: 1fr 1fr;
         gap: 2rem;
     }
+    
+    .contact-section {
+        padding: 6rem 2.5rem;
+    }
+    
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -2397,5 +2406,19 @@ body {
     .stat-card {
         padding: 2rem 1.5rem;
         border-radius: 20px;
+    }
+    
+    .contact-section {
+        padding: 4rem 1.5rem;
+    }
+    
+    .contact-info-card,
+    .contact-form-card {
+        padding: 2.2rem 1.5rem;
+        border-radius: 20px;
+    }
+    
+    .contact-info-card h3 {
+        font-size: 1.5rem;
     }
 }

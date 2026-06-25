@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // SCROLL REVEAL (INTERSECTION OBSERVER)
     // -------------------------------------------------------------
-    const revealElements = document.querySelectorAll('.about-section, .skills-section, .projects-section, .experience-section, .certifications-section, .achievements-section, .portfolio-section, .timeline-item, .cert-card, .stat-card');
+    const revealElements = document.querySelectorAll('.about-section, .skills-section, .projects-section, .experience-section, .certifications-section, .achievements-section, .contact-section, .portfolio-section, .timeline-item, .cert-card, .stat-card, .contact-info-panel, .contact-form-panel');
     
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -417,6 +417,74 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }, { threshold: 0.25 });
-        counterObserver.observe(achievementsSection);
+    }
+
+    // -------------------------------------------------------------
+    // CONTACT FORM INTERACTIVITY & RIPPLE EFFECT
+    // -------------------------------------------------------------
+    const contactForm = document.getElementById('contact-form');
+    const submitBtn = document.getElementById('contact-submit');
+
+    if (contactForm && submitBtn) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const nameInput = document.getElementById('contact-name');
+            const emailInput = document.getElementById('contact-email');
+            const messageInput = document.getElementById('contact-message');
+
+            if (!nameInput.value || !emailInput.value || !messageInput.value) {
+                if (!nameInput.value) nameInput.focus();
+                else if (!emailInput.value) emailInput.focus();
+                else if (!messageInput.value) messageInput.focus();
+                return;
+            }
+
+            // Animate button click scale
+            submitBtn.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                submitBtn.style.transform = '';
+            }, 150);
+
+            // Display success glass notification
+            const successToast = document.createElement('div');
+            successToast.style.position = 'fixed';
+            successToast.style.bottom = '30px';
+            successToast.style.right = '30px';
+            successToast.style.padding = '1.2rem 2.2rem';
+            successToast.style.background = 'rgba(255, 255, 255, 0.9)';
+            successToast.style.border = '1px solid rgba(16, 185, 129, 0.3)';
+            successToast.style.boxShadow = '0 20px 45px rgba(15, 23, 42, 0.08)';
+            successToast.style.borderRadius = '16px';
+            successToast.style.backdropFilter = 'blur(16px)';
+            successToast.style.color = '#10b981';
+            successToast.style.fontWeight = '600';
+            successToast.style.fontSize = '1rem';
+            successToast.style.zIndex = '9999';
+            successToast.style.opacity = '0';
+            successToast.style.transform = 'translateY(20px)';
+            successToast.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+            successToast.innerHTML = '✨ Message sent successfully!';
+
+            document.body.appendChild(successToast);
+
+            // Trigger animation
+            setTimeout(() => {
+                successToast.style.opacity = '1';
+                successToast.style.transform = 'translateY(0)';
+            }, 50);
+
+            // Remove toast after 3 seconds
+            setTimeout(() => {
+                successToast.style.opacity = '0';
+                successToast.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    successToast.remove();
+                }, 400);
+            }, 3000);
+
+            // Reset form
+            contactForm.reset();
+        });
     }
 });
