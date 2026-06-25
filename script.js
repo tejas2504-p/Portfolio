@@ -298,4 +298,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // -------------------------------------------------------------
+    // SCROLL REVEAL (INTERSECTION OBSERVER)
+    // -------------------------------------------------------------
+    const revealSections = document.querySelectorAll('.about-section, .portfolio-section');
+    
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                // Once it is revealed, we don't need to track it anymore
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15 // triggers when 15% of section is visible
+    });
+
+    revealSections.forEach(section => {
+        revealObserver.observe(section);
+    });
 });
