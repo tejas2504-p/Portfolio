@@ -2040,6 +2040,252 @@ body {
 }
 
 /* ==========================================================================
+   CONTACT SECTION STYLES
+   ========================================================================== */
+.contact-section {
+    min-height: 90vh;
+    padding: 8rem 4rem;
+    position: relative;
+    background: #ffffff;
+    box-sizing: border-box;
+    scroll-margin-top: 80px;
+}
+
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 5rem;
+    max-width: 600px;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4rem;
+    width: 100%;
+}
+
+/* Info and Form Panels */
+.contact-info-panel {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-form-panel {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-info-panel.active,
+.contact-form-panel.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.contact-info-card,
+.contact-form-card {
+    padding: 3.5rem 3rem;
+    border-radius: 28px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: var(--glass-shadow);
+}
+
+/* Left Panel - Contact Info */
+.contact-info-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: var(--color-text-primary);
+}
+
+.contact-info-desc {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+}
+
+.contact-details-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    margin-bottom: 2.5rem;
+}
+
+.contact-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.detail-icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(15, 23, 42, 0.03);
+    border: 1px solid var(--glass-border);
+    color: var(--color-text-secondary);
+    transition: all 0.3s ease;
+}
+
+.detail-icon-box svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* Individual Icon Glows */
+.email-glow { color: var(--color-blue); }
+.phone-glow { color: var(--color-purple); }
+.location-glow { color: #10b981; }
+
+.contact-detail-item:hover .detail-icon-box.email-glow {
+    background: rgba(2, 132, 199, 0.08);
+    border-color: rgba(2, 132, 199, 0.25);
+    box-shadow: 0 8px 20px rgba(2, 132, 199, 0.1);
+}
+
+.contact-detail-item:hover .detail-icon-box.phone-glow {
+    background: rgba(124, 58, 237, 0.08);
+    border-color: rgba(124, 58, 237, 0.25);
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.1);
+}
+
+.contact-detail-item:hover .detail-icon-box.location-glow {
+    background: rgba(16, 185, 129, 0.08);
+    border-color: rgba(16, 185, 129, 0.25);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.1);
+}
+
+.contact-detail-item:hover .detail-icon-box {
+    animation: floatIcon 2s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+}
+
+.detail-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.detail-value {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a.detail-value:hover {
+    color: var(--color-purple);
+}
+
+.detail-value.text-slate {
+    color: var(--color-text-secondary);
+}
+
+.contact-social-section h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--color-text-secondary);
+}
+
+.contact-social-icons {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Right Panel - Contact Form */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    position: relative;
+    width: 100%;
+}
+
+.form-label-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.form-input {
+    width: 100%;
+    padding: 1.1rem 1.4rem;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.form-input::placeholder {
+    color: var(--color-text-secondary);
+    opacity: 0.8;
+}
+
+/* Input focus glow and border shifts */
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-purple);
+    background: #ffffff;
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.08), 0 0 0 3px rgba(124, 58, 237, 0.05);
+}
+
+.btn-submit {
+    width: 100%;
+    cursor: pointer;
+    border: none;
+}
+
+/* ==========================================================================
    RESPONSIVENESS (Media Queries)
    ========================================================================== */
 @media (max-width: 1200px) {
