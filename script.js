@@ -1,16 +1,138 @@
 document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
-    // SPOTLIGHT EFFECT
+    // USER MOTION PREFERENCE CHECK
+    // -------------------------------------------------------------
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // -------------------------------------------------------------
+    // SMOOTH SPOTLIGHT LERP EFFECT
     // -------------------------------------------------------------
     const spotlight = document.getElementById('spotlight');
-    
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let spotX = mouseX;
+    let spotY = mouseY;
+
     document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function updateSpotlight() {
+        if (!prefersReducedMotion) {
+            spotX += (mouseX - spotX) * 0.08;
+            spotY += (mouseY - spotY) * 0.08;
+        } else {
+            spotX = mouseX;
+            spotY = mouseY;
+        }
+        
         if (spotlight) {
-            // Set position based on client coordinates relative to window
-            spotlight.style.setProperty('--x', `${e.clientX}px`);
-            spotlight.style.setProperty('--y', `${e.clientY}px`);
+            spotlight.style.setProperty('--x', `${spotX}px`);
+            spotlight.style.setProperty('--y', `${spotY}px`);
+        }
+        requestAnimationFrame(updateSpotlight);
+    }
+    requestAnimationFrame(updateSpotlight);
+
+    // =============================================================
+    // DYNAMIC BACKGROUND INJECTIONS (Aurora Blob & Floating Shapes)
+    // =============================================================
+    const bgWrapper = document.querySelector('.bg-wrapper');
+    if (bgWrapper && !prefersReducedMotion) {
+        // Inject Pink Aurora Blob
+        const pinkBlob = document.createElement('div');
+        pinkBlob.classList.add('glow-blob', 'glow-pink');
+        bgWrapper.appendChild(pinkBlob);
+
+        // Inject Floating Geometric Shapes
+        const ring = document.createElement('div');
+        ring.classList.add('floating-shape', 'shape-ring');
+        
+        const triangle = document.createElement('div');
+        triangle.classList.add('floating-shape', 'shape-triangle');
+        
+        const square = document.createElement('div');
+        square.classList.add('floating-shape', 'shape-square');
+        
+        bgWrapper.appendChild(ring);
+        bgWrapper.appendChild(triangle);
+        bgWrapper.appendChild(square);
+    }
+
+    // =============================================================
+    // DYNAMIC SELF-DRAWING SECTION DIVIDERS
+    // =============================================================
+    document.querySelectorAll('section:not(:last-of-type)').forEach(section => {
+        const divider = document.createElement('div');
+        divider.classList.add('section-divider-line');
+        section.parentNode.insertBefore(divider, section.nextSibling);
+        
+        if (!prefersReducedMotion) {
+            gsap.fromTo(divider, 
+                { scaleX: 0 },
+                {
+                    scaleX: 1,
+                    duration: 1.5,
+                    ease: 'power2.inOut',
+                    scrollTrigger: {
+                        trigger: divider,
+                        start: 'top 95%',
+                    }
+                }
+            );
         }
     });
+
+    // =============================================================
+    // HERO PARALLAX DEPTH SCROLL
+    // =============================================================
+    if (!prefersReducedMotion) {
+        gsap.to('.hero-text-panel', {
+            yPercent: -15,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '#home',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            }
+        });
+
+        gsap.to('.hero-image-panel', {
+            yPercent: 12,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '#home',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            }
+        });
+
+        // =============================================================
+        // CINEMATIC PROJECT IMAGE PARALLAX ZOOM
+        // =============================================================
+        gsap.utils.toArray('.project-card').forEach(card => {
+            const img = card.querySelector('.project-img');
+            if (img) {
+                gsap.fromTo(img, 
+                    { scale: 1.15, y: -20 },
+                    {
+                        scale: 1.0,
+                        y: 10,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: card,
+                            start: 'top bottom',
+                            end: 'bottom top',
+                            scrub: true,
+                        }
+                    }
+                );
+            }
+        });
+    }
 
     // =============================================================
     // DYNAMIC INTERACTION INJECTIONS (Ripples, Skill Bars, Floating Labels)
