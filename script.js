@@ -201,22 +201,85 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // -------------------------------------------------------------
-    // STICKY NAVBAR SCROLL ACTION
-    // -------------------------------------------------------------
-    const navbar = document.getElementById('navbar');
-    
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 20) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
+    // =============================================================
+    // LENIS SMOOTH SCROLL INITIALIZATION
+    // =============================================================
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Apple easeOutExpo style
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        smoothTouch: false,
+        wheelMultiplier: 1.0,
+        touchMultiplier: 1.5,
+    });
+
+    // Synchronize Lenis scrolling with GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    // =============================================================
+    // GLOBAL PAGE LOADING INTRO TIMELINE
+    // =============================================================
+    const introTl = gsap.timeline({ defaults: { ease: 'power4.out', duration: 1.2 } });
+
+    // Set initial GSAP states to prevent FOUC (flash of unstyled content)
+    gsap.set('.navbar', { y: -100, opacity: 0 });
+    gsap.set('.intro-badge', { y: -20, opacity: 0 });
+    gsap.set('.greeting-heading', { y: 40, opacity: 0 });
+    gsap.set('.typing-container', { y: 20, opacity: 0 });
+    gsap.set('.subtitle-badge', { x: -30, opacity: 0 });
+    gsap.set('.cta-buttons', { y: 20, opacity: 0 });
+    gsap.set('.social-links', { y: 20, opacity: 0 });
+    gsap.set('.hero-image-panel', { scale: 0.9, opacity: 0 });
+
+    // Play the entrance timeline
+    introTl.to('.hero-image-panel', { scale: 1, opacity: 1, duration: 1.6 })
+           .to('.navbar', { y: 0, opacity: 1, duration: 0.8 }, '-=1.2')
+           .to('.intro-badge', { y: 0, opacity: 1, duration: 0.6 }, '-=0.8')
+           .to('.greeting-heading', { y: 0, opacity: 1, duration: 0.8 }, '-=0.6')
+           .to('.typing-container', { y: 0, opacity: 1, duration: 0.6 }, '-=0.5')
+           .to('.subtitle-badge', { x: 0, opacity: 1, stagger: 0.1, duration: 0.6 }, '-=0.4')
+           .to('.cta-buttons', { y: 0, opacity: 1, duration: 0.6 }, '-=0.4')
+           .to('.social-links', { y: 0, opacity: 1, duration: 0.6 }, '-=0.4');
+
+    // =============================================================
+    // GLOBAL SCROLL PROGRESS INDICATOR
+    // =============================================================
+    gsap.to('#scroll-progress', {
+        width: '100%',
+        ease: 'none',
+        scrollTrigger: {
+            trigger: 'body',
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 0.1, // very slight smooth lag
         }
     });
 
-    // -------------------------------------------------------------
+    // =============================================================
+    // STICKY NAVBAR ACTION
+    // =============================================================
+    const navbar = document.getElementById('navbar');
+    if (navbar) {
+        ScrollTrigger.create({
+            start: 'top -30px',
+            onEnter: () => navbar.classList.add('scrolled'),
+            onLeaveBack: () => navbar.classList.remove('scrolled'),
+        });
+    }
+
+    // =============================================================
     // MOBILE NAV HAMBURGER MENU TOGGLE
-    // -------------------------------------------------------------
+    // =============================================================
     const hamburgerMenu = document.getElementById('hamburger-menu');
     const mobileNav = document.getElementById('mobile-nav');
     
@@ -235,26 +298,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // -------------------------------------------------------------
-    // ACTIVE SECTION SCROLLSPY & SMOOTH SCROLLING
-    // -------------------------------------------------------------
+    // =============================================================
+    // ACTIVE SECTION SCROLLSPY (Binds to Lenis Scroll)
+    // =============================================================
     const navLinks = document.querySelectorAll('.nav-link');
     const mobileLinks = document.querySelectorAll('.mobile-nav-link');
     const sections = document.querySelectorAll('section');
 
-    function updateActiveLink() {
+    function updateActiveLink(scrollY) {
         let currentSectionId = '';
         
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            // Detect if section is in viewport
-            if (window.scrollY >= (sectionTop - 150)) {
+            if (scrollY >= (sectionTop - 180)) {
                 currentSectionId = section.getAttribute('id');
             }
         });
 
-        // Update desktop links
         navLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('href') === `#${currentSectionId}`) {
@@ -262,7 +322,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Update mobile links
         mobileLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('href') === `#${currentSectionId}`) {
@@ -271,11 +330,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    window.addEventListener('scroll', updateActiveLink);
-    updateActiveLink(); // Initial run
+    lenis.on('scroll', (e) => {
+        updateActiveLink(e.scroll);
+    });
+    updateActiveLink(window.scrollY); // Initial run
 
-    // Smooth Scroll Click Handlers
-    const allLinks = document.querySelectorAll('.nav-link, .mobile-nav-link, .logo, #view-projects');
+    // =============================================================
+    // SMOOTH ANCHOR SCROLLING (Lenis integration)
+    // =============================================================
+    const allLinks = document.querySelectorAll('.nav-link, .mobile-nav-link, .logo, #view-projects, a[href^="#"]');
     
     allLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -285,44 +348,226 @@ document.addEventListener('DOMContentLoaded', () => {
                 const targetElement = document.querySelector(targetId);
                 
                 if (targetElement) {
-                    // Close mobile nav menu
+                    // Close mobile nav menu if open
                     if (hamburgerMenu) hamburgerMenu.classList.remove('active');
                     if (mobileNav) mobileNav.classList.remove('active');
 
-                    // Smooth scroll
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 70, // accounts for header height when scrolled
-                        behavior: 'smooth'
+                    // Scroll smoothly using Lenis
+                    lenis.scrollTo(targetElement, {
+                        offset: -70,
+                        duration: 1.5,
+                        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
                     });
                 }
             }
         });
     });
 
-    // -------------------------------------------------------------
-    // SCROLL REVEAL (INTERSECTION OBSERVER)
-    // -------------------------------------------------------------
-    const revealElements = document.querySelectorAll('.about-section, .skills-section, .projects-section, .experience-section, .certifications-section, .achievements-section, .contact-section, .portfolio-section, .timeline-item, .cert-card, .stat-card, .contact-info-panel, .contact-form-panel');
-    
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-                // Once it is revealed, we don't need to track it anymore
-                observer.unobserve(entry.target);
+    // =============================================================
+    // DELUXE SCROLL REVEALS (GSAP ScrollTrigger & Staggers)
+    // =============================================================
+
+    // 1. About Section Reveal
+    gsap.from('.about-left-panel', {
+        opacity: 0,
+        x: -60,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.about-section',
+            start: 'top 80%',
+            onEnter: () => document.querySelector('.about-section').classList.add('active'),
+        }
+    });
+
+    gsap.from('.about-right-panel > *', {
+        opacity: 0,
+        y: 40,
+        duration: 1.0,
+        stagger: 0.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.about-section',
+            start: 'top 80%',
+        }
+    });
+
+    // 2. Skills Section - Category Cards & Skill Cards Stagger
+    gsap.from('.skills-category-card', {
+        opacity: 0,
+        y: 40,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.skills-categories-wrapper',
+            start: 'top 85%',
+            onEnter: () => document.querySelector('.skills-section').classList.add('active'),
+        }
+    });
+
+    gsap.utils.toArray('.skills-grid-new').forEach(grid => {
+        const cards = grid.querySelectorAll('.skill-card');
+        gsap.from(cards, {
+            opacity: 0,
+            y: 20,
+            duration: 0.6,
+            stagger: 0.05,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: grid,
+                start: 'top 90%',
+            },
+            onStart: function() {
+                this.targets().forEach(el => el.classList.add('gsap-animating'));
+            },
+            onComplete: function() {
+                this.targets().forEach(el => {
+                    el.classList.remove('gsap-animating');
+                    gsap.set(el, { clearProps: 'transform,opacity' });
+                    el.classList.add('active');
+                });
             }
         });
-    }, {
-        threshold: 0.15 // triggers when 15% of the element is visible
     });
 
-    revealElements.forEach(el => {
-        revealObserver.observe(el);
+    // 3. Featured Projects Staggered Entrance
+    gsap.from('.project-card', {
+        opacity: 0,
+        y: 50,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.projects-grid',
+            start: 'top 85%',
+            onEnter: () => document.querySelector('.projects-section').classList.add('active'),
+        },
+        onStart: function() {
+            this.targets().forEach(el => el.classList.add('gsap-animating'));
+        },
+        onComplete: function() {
+            this.targets().forEach(el => {
+                el.classList.remove('gsap-animating');
+                gsap.set(el, { clearProps: 'transform,opacity' });
+                el.classList.add('active');
+            });
+        }
     });
 
-    // -------------------------------------------------------------
+    // 4. Experience Timeline Cards Alternating Reveal
+    gsap.utils.toArray('.timeline-item').forEach(item => {
+        const isLeft = item.classList.contains('left');
+        gsap.from(item, {
+            opacity: 0,
+            x: isLeft ? -60 : 60,
+            duration: 1.0,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: item,
+                start: 'top 85%',
+                onEnter: () => item.classList.add('active'),
+            }
+        });
+    });
+
+    // 5. Timeline Progress Bar Scroll Scrubbing
+    const timelineProgress = document.querySelector('.timeline-line-progress');
+    if (timelineProgress) {
+        gsap.fromTo(timelineProgress, 
+            { height: '0%' },
+            {
+                height: '100%',
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.timeline-wrapper',
+                    start: 'top 75%',
+                    end: 'bottom 75%',
+                    scrub: true,
+                }
+            }
+        );
+    }
+
+    // 6. Certifications Staggered Reveal
+    gsap.from('.cert-card', {
+        opacity: 0,
+        y: 40,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.cert-grid',
+            start: 'top 85%',
+            onEnter: () => document.querySelector('.certifications-section').classList.add('active'),
+        },
+        onStart: function() {
+            this.targets().forEach(el => el.classList.add('gsap-animating'));
+        },
+        onComplete: function() {
+            this.targets().forEach(el => {
+                el.classList.remove('gsap-animating');
+                gsap.set(el, { clearProps: 'transform,opacity' });
+                el.classList.add('active');
+            });
+        }
+    });
+
+    // 7. Achievements Staggered Reveal & Number Counters Trigger
+    gsap.from('.stat-card', {
+        opacity: 0,
+        y: 40,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.stats-grid',
+            start: 'top 85%',
+            onEnter: () => {
+                document.querySelector('.achievements-section').classList.add('active');
+                animateCounters();
+            },
+        },
+        onStart: function() {
+            this.targets().forEach(el => el.classList.add('gsap-animating'));
+        },
+        onComplete: function() {
+            this.targets().forEach(el => {
+                el.classList.remove('gsap-animating');
+                gsap.set(el, { clearProps: 'transform,opacity' });
+                el.classList.add('active');
+            });
+        }
+    });
+
+    // 8. Contact Section Panel Reveals
+    gsap.from('.contact-info-panel', {
+        opacity: 0,
+        x: -50,
+        duration: 1.0,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.contact-grid',
+            start: 'top 80%',
+            onEnter: () => document.querySelector('.contact-info-panel').classList.add('active'),
+        }
+    });
+
+    gsap.from('.contact-form-panel', {
+        opacity: 0,
+        x: 50,
+        duration: 1.0,
+        ease: 'power3.out',
+        scrollTrigger: {
+            trigger: '.contact-grid',
+            start: 'top 80%',
+            onEnter: () => document.querySelector('.contact-form-panel').classList.add('active'),
+        }
+    });
+
+    // =============================================================
     // INTERACTIVE PROJECT CARD 3D TILT EFFECT
-    // -------------------------------------------------------------
+    // =============================================================
     const projectCards = document.querySelectorAll('.project-card');
     
     projectCards.forEach(card => {
@@ -331,7 +576,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const x = e.clientX - rect.left - (rect.width / 2); // offset from center
             const y = e.clientY - rect.top - (rect.height / 2);
             
-            // Subtle rotation degrees (max 6 deg for card tilt to feel solid and modern)
             const rotX = -(y / (rect.height / 2)) * 6;
             const rotY = (x / (rect.width / 2)) * 6;
             
@@ -339,60 +583,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         card.addEventListener('mouseleave', () => {
-            // Reset transition and position
             card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
             card.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)';
         });
         
         card.addEventListener('mouseenter', () => {
-            card.style.transition = 'none'; // dynamic tracking response
+            card.style.transition = 'none';
         });
     });
 
-    // -------------------------------------------------------------
-    // EXPERIENCE TIMELINE PROGRESS ANIMATION
-    // -------------------------------------------------------------
-    function updateTimelineProgress() {
-        const timeline = document.querySelector('.timeline-wrapper');
-        const progressLine = document.querySelector('.timeline-line-progress');
-        
-        if (!timeline || !progressLine) return;
-        
-        const rect = timeline.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
-        
-        // Starts drawing when the top of the timeline is 75% up from the bottom of the viewport
-        const triggerPoint = viewportHeight * 0.75;
-        const timelineTop = rect.top;
-        const timelineHeight = rect.height;
-        
-        if (timelineTop < triggerPoint) {
-            const scrolledDistance = triggerPoint - timelineTop;
-            const progressPercent = Math.min(Math.max(scrolledDistance / timelineHeight, 0), 1);
-            progressLine.style.height = `${progressPercent * 100}%`;
-        } else {
-            progressLine.style.height = '0%';
-        }
-    }
-    
-    window.addEventListener('scroll', updateTimelineProgress);
-    window.addEventListener('resize', updateTimelineProgress);
-    // Add small delay to ensure page heights are correctly rendered
-    setTimeout(updateTimelineProgress, 200);
-
-    // -------------------------------------------------------------
-    // ACHIEVEMENTS COUNTER ANIMATION
-    // -------------------------------------------------------------
+    // =============================================================
+    // ACHIEVEMENTS COUNTER ANIMATION FUNCTION
+    // =============================================================
     function animateCounters() {
         const counters = document.querySelectorAll('.stat-number');
-        const duration = 2000; // 2 seconds animation duration
+        const duration = 2000;
 
         counters.forEach(counter => {
             const target = +counter.getAttribute('data-target');
             const stepTime = Math.abs(Math.floor(duration / target));
             let current = 0;
             
-            // Handle step increments dynamically based on target value
             const increment = target > 50 ? Math.ceil(target / 100) : 1;
             
             const timer = setInterval(() => {
@@ -407,21 +618,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const achievementsSection = document.querySelector('.achievements-section');
-    if (achievementsSection) {
-        const counterObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateCounters();
-                    observer.unobserve(entry.target); // only animate once
-                }
-            });
-        }, { threshold: 0.25 });
-    }
-
-    // -------------------------------------------------------------
+    // =============================================================
     // CONTACT FORM INTERACTIVITY & RIPPLE EFFECT
-    // -------------------------------------------------------------
+    // =============================================================
     const contactForm = document.getElementById('contact-form');
     const submitBtn = document.getElementById('contact-submit');
 
@@ -440,13 +639,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Animate button click scale
             submitBtn.style.transform = 'scale(0.95)';
             setTimeout(() => {
                 submitBtn.style.transform = '';
             }, 150);
 
-            // Display success glass notification
             const successToast = document.createElement('div');
             successToast.style.position = 'fixed';
             successToast.style.bottom = '30px';
@@ -468,13 +665,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             document.body.appendChild(successToast);
 
-            // Trigger animation
             setTimeout(() => {
                 successToast.style.opacity = '1';
                 successToast.style.transform = 'translateY(0)';
             }, 50);
 
-            // Remove toast after 3 seconds
             setTimeout(() => {
                 successToast.style.opacity = '0';
                 successToast.style.transform = 'translateY(20px)';
@@ -483,20 +678,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 400);
             }, 3000);
 
-            // Reset form
             contactForm.reset();
         });
     }
 
-    // -------------------------------------------------------------
+    // =============================================================
     // BACK TO TOP SMOOTH SCROLL ACTION
-    // -------------------------------------------------------------
+    // =============================================================
     const backToTopBtn = document.getElementById('back-to-top');
     if (backToTopBtn) {
         backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+            lenis.scrollTo(0, {
+                duration: 1.5,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             });
         });
     }
