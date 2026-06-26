@@ -44,20 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const pinkBlob = document.createElement('div');
         pinkBlob.classList.add('glow-blob', 'glow-pink');
         bgWrapper.appendChild(pinkBlob);
-
-        // Inject Floating Geometric Shapes
-        const ring = document.createElement('div');
-        ring.classList.add('floating-shape', 'shape-ring');
-        
-        const triangle = document.createElement('div');
-        triangle.classList.add('floating-shape', 'shape-triangle');
-        
-        const square = document.createElement('div');
-        square.classList.add('floating-shape', 'shape-square');
-        
-        bgWrapper.appendChild(ring);
-        bgWrapper.appendChild(triangle);
-        bgWrapper.appendChild(square);
     }
 
     // =============================================================
@@ -135,43 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =============================================================
-    // DYNAMIC INTERACTION INJECTIONS (Ripples, Skill Bars, Floating Labels)
+    // DYNAMIC INTERACTION INJECTIONS (Ripples, Floating Labels)
     // =============================================================
-
-    // 1. Skill Proficiency Bars Dynamic Injection
-    const skillProficiency = {
-        'HTML': '92%',
-        'CSS': '88%',
-        'JavaScript': '94%',
-        'React': '90%',
-        'Tailwind CSS': '86%',
-        'Node.js': '80%',
-        'Express.js': '82%',
-        'MongoDB': '78%',
-        'MySQL': '75%',
-        'Git': '85%',
-        'GitHub': '88%',
-        'VS Code': '95%',
-        'Postman': '80%'
-    };
-
-    document.querySelectorAll('.skill-card').forEach(card => {
-        const h4 = card.querySelector('h4');
-        if (h4) {
-            const name = h4.textContent.trim();
-            const percentage = skillProficiency[name] || '80%';
-            
-            const wrapper = document.createElement('div');
-            wrapper.classList.add('skill-progress-wrapper');
-            
-            const bar = document.createElement('div');
-            bar.classList.add('skill-progress-bar');
-            bar.setAttribute('data-level', percentage);
-            
-            wrapper.appendChild(bar);
-            card.appendChild(wrapper);
-        }
-    });
 
     // 2. Click Button Ripple Effect
     document.querySelectorAll('.btn, .back-to-top').forEach(button => {
@@ -642,11 +593,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     el.classList.remove('gsap-animating');
                     gsap.set(el, { clearProps: 'transform,opacity' });
                     el.classList.add('active');
-                    // Animate the dynamically injected progress bar level
-                    const bar = el.querySelector('.skill-progress-bar');
-                    if (bar) {
-                        bar.style.width = bar.getAttribute('data-level');
-                    }
                 });
             }
         });
