@@ -12,6 +12,100 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // =============================================================
+    // DYNAMIC INTERACTION INJECTIONS (Ripples, Skill Bars, Floating Labels)
+    // =============================================================
+
+    // 1. Skill Proficiency Bars Dynamic Injection
+    const skillProficiency = {
+        'HTML': '92%',
+        'CSS': '88%',
+        'JavaScript': '94%',
+        'React': '90%',
+        'Tailwind CSS': '86%',
+        'Node.js': '80%',
+        'Express.js': '82%',
+        'MongoDB': '78%',
+        'MySQL': '75%',
+        'Git': '85%',
+        'GitHub': '88%',
+        'VS Code': '95%',
+        'Postman': '80%'
+    };
+
+    document.querySelectorAll('.skill-card').forEach(card => {
+        const h4 = card.querySelector('h4');
+        if (h4) {
+            const name = h4.textContent.trim();
+            const percentage = skillProficiency[name] || '80%';
+            
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('skill-progress-wrapper');
+            
+            const bar = document.createElement('div');
+            bar.classList.add('skill-progress-bar');
+            bar.setAttribute('data-level', percentage);
+            
+            wrapper.appendChild(bar);
+            card.appendChild(wrapper);
+        }
+    });
+
+    // 2. Click Button Ripple Effect
+    document.querySelectorAll('.btn, .back-to-top').forEach(button => {
+        button.style.position = 'relative';
+        button.style.overflow = 'hidden';
+        button.addEventListener('click', function (e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const ripple = document.createElement('span');
+            ripple.classList.add('btn-ripple');
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+
+            this.appendChild(ripple);
+
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+
+    // 3. Floating Label Conversion for Contact Form
+    document.querySelectorAll('.form-group').forEach(group => {
+        const input = group.querySelector('.form-input');
+        const label = group.querySelector('label');
+        if (input && label) {
+            // Convert to visual floating label
+            label.className = 'form-label';
+            
+            input.addEventListener('focus', () => {
+                group.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', () => {
+                if (!input.value) {
+                    group.classList.remove('focused');
+                }
+            });
+            
+            input.addEventListener('input', () => {
+                if (input.value) {
+                    group.classList.add('focused');
+                } else {
+                    group.classList.remove('focused');
+                }
+            });
+            
+            // Check initial load
+            if (input.value) {
+                group.classList.add('focused');
+            }
+        }
+    });
+
     // -------------------------------------------------------------
     // TYPING ANIMATION
     // -------------------------------------------------------------
@@ -426,6 +520,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     el.classList.remove('gsap-animating');
                     gsap.set(el, { clearProps: 'transform,opacity' });
                     el.classList.add('active');
+                    // Animate the dynamically injected progress bar level
+                    const bar = el.querySelector('.skill-progress-bar');
+                    if (bar) {
+                        bar.style.width = bar.getAttribute('data-level');
+                    }
                 });
             }
         });

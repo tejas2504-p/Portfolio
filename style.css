@@ -2982,3 +2982,211 @@ a.detail-value:hover {
         padding-top: 1.5rem;
     }
 }
+
+/* ==========================================================================
+   PREMIUM MICRO-INTERACTIONS & UI UPGRADES
+   ========================================================================== */
+
+/* 1. Logo Glow & Interactive Rotate */
+.logo {
+    display: inline-flex;
+    align-items: center;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+}
+.logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 12px rgba(2, 132, 199, 0.4));
+}
+.logo span {
+    display: inline-block;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.logo:hover span {
+    transform: rotate(360deg) scale(1.2);
+}
+
+/* 2. Active Section Nav Glow & Line transition */
+.nav-link.active {
+    text-shadow: 0 0 15px rgba(124, 58, 237, 0.25);
+}
+
+/* 3. Button Hover, Active, and Ripple Effects */
+.btn {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-color 0.3s ease;
+}
+.btn:hover {
+    transform: translateY(-4px) scale(1.01);
+}
+.btn:active {
+    transform: translateY(-1px) scale(0.98);
+    transition: transform 0.1s ease;
+}
+.btn-primary:hover {
+    box-shadow: 0 12px 30px rgba(0, 210, 255, 0.3), 
+                0 0 20px rgba(171, 71, 188, 0.25);
+}
+.btn-secondary:hover {
+    box-shadow: 0 12px 25px rgba(15, 23, 42, 0.06);
+}
+
+/* Button Ripple effect */
+.btn-ripple {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.35);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    animation: btn-ripple-anim 0.6s cubic-bezier(0.1, 0.8, 0.3, 1);
+    pointer-events: none;
+    z-index: 10;
+}
+@keyframes btn-ripple-anim {
+    to {
+        transform: translate(-50%, -50%) scale(4);
+        opacity: 0;
+    }
+}
+
+/* 4. Project Card Enhancements */
+.project-card {
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.4s ease !important;
+}
+.project-card:hover {
+    box-shadow: 0 30px 60px rgba(15, 23, 42, 0.08), 
+                0 0 30px rgba(124, 58, 237, 0.12);
+}
+.project-img {
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.project-card:hover .project-img {
+    transform: scale(1.06);
+}
+/* Stagger / hover badge effect */
+.project-card .tech-badge {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.project-card:hover .tech-badge {
+    transform: translateY(-2px) scale(1.05);
+    background: rgba(124, 58, 237, 0.06);
+    border-color: rgba(124, 58, 237, 0.2);
+    color: var(--color-purple);
+}
+/* GitHub and Live Demo buttons slide upward */
+.project-actions {
+    transform: translateY(8px);
+    opacity: 0.85;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+.project-card:hover .project-actions {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* 5. Skill Cards & Level Progress Bars */
+.skill-card {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease;
+}
+.skill-card:hover {
+    transform: translateY(-8px) scale(1.04) rotate(1deg) !important;
+    box-shadow: 0 15px 30px rgba(124, 58, 237, 0.1) !important;
+    border-color: rgba(124, 58, 237, 0.25) !important;
+}
+.skill-card:hover .tech-icon {
+    transform: scale(1.1) rotate(10deg);
+}
+
+/* Progress bar inside skill cards */
+.skill-progress-wrapper {
+    width: 100%;
+    height: 4px;
+    background: rgba(15, 23, 42, 0.05);
+    border-radius: 2px;
+    margin-top: 10px;
+    overflow: hidden;
+    position: relative;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+.skill-card:hover .skill-progress-wrapper {
+    opacity: 1;
+}
+.skill-progress-bar {
+    width: 0%; /* Animates dynamically */
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-blue), var(--color-purple));
+    border-radius: 2px;
+    transition: width 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 6. Experience & Certification Cards Hover Lift */
+.timeline-content:hover,
+.cert-card:hover {
+    transform: translateY(-6px) scale(1.01) !important;
+    box-shadow: 0 25px 45px rgba(15, 23, 42, 0.05), 
+                0 0 20px rgba(124, 58, 237, 0.08) !important;
+    border-color: rgba(124, 58, 237, 0.2) !important;
+}
+
+/* 7. Contact Form Animated Floating Labels & Glows */
+.form-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+.form-label {
+    position: absolute;
+    left: 1.4rem;
+    top: 1.1rem;
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0.65;
+}
+.form-input {
+    padding-top: 1.6rem !important;
+    padding-bottom: 0.6rem !important;
+    border: 1px solid var(--glass-border);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-input::placeholder {
+    color: transparent !important;
+}
+.form-group.focused .form-label {
+    transform: translateY(-8px);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-purple);
+    opacity: 1;
+}
+.form-input:focus {
+    border-color: var(--color-purple) !important;
+    box-shadow: 0 0 15px rgba(124, 58, 237, 0.15) !important;
+    outline: none;
+}
+
+/* 8. Footer Micro-interactions */
+.back-to-top {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                background-color 0.3s, 
+                box-shadow 0.3s;
+}
+.back-to-top:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05);
+}
+.back-to-top:hover svg {
+    animation: arrow-bounce 0.8s infinite alternate;
+}
+@keyframes arrow-bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-4px); }
+}
