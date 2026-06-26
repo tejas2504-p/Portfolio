@@ -329,7 +329,7 @@ body {
 
 /* Hamburger toggle menu */
 .hamburger-menu {
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: space-between;
     width: 24px;
