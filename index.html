@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tejas Prajapati | Full Stack Developer Portfolio</title>
     <meta name="description" content="Portfolio of Tejas Prajapati - Full Stack Developer, MERN Stack Developer, and Computer Engineering Student.">
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="assets/favicon.jpg">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,11 +20,19 @@
 
     <!-- Background Canvas and Glowing Blobs -->
     <div class="bg-wrapper">
-        <div class="glow-blob glow-blue"></div>
-        <div class="glow-blob glow-purple"></div>
-        <canvas id="particle-canvas"></canvas>
+        <div class="glow-container glow-blue-container">
+            <div class="glow-blob glow-blue"></div>
+        </div>
+        <div class="glow-container glow-purple-container">
+            <div class="glow-blob glow-purple"></div>
+        </div>
+        <div class="glow-container glow-pink-container">
+            <div class="glow-blob glow-pink"></div>
+        </div>
         <div class="spotlight" id="spotlight"></div>
     </div>
+    <canvas id="particle-canvas"></canvas>
+
 
     <!-- Premium Sticky Navigation Bar -->
     <nav class="navbar animate-slide-down" id="navbar">
@@ -163,6 +173,7 @@
 
                 <!-- Right Profile Illustration Panel -->
                 <div class="hero-image-panel animate-fade-in">
+                    <div id="hero-3d-canvas-container" class="hero-3d-canvas-container"></div>
                     <div class="image-wrapper-outer">
                         <div class="glowing-ring"></div>
                         <div class="image-wrapper-inner">
@@ -643,50 +654,86 @@
                 <div class="cert-grid">
                     <!-- Cert Card 1: AWS -->
                     <div class="cert-card">
-                        <div class="cert-icon-wrapper aws-glow">
-                            <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M17.5 19A5.5 5.5 0 0 0 17 8H15.5a9 9 0 1 0-11.9 9.9"/>
-                                <path d="M12 12v6M9 15l3-3 3 3"/>
-                            </svg>
-                        </div>
-                        <div class="cert-info">
-                            <h3>AWS Certified Cloud Practitioner</h3>
-                            <span class="cert-org">Amazon Web Services</span>
-                            <span class="cert-year">2025</span>
+                        <div class="cert-card-inner">
+                            <div class="cert-card-front">
+                                <div class="cert-icon-wrapper aws-glow">
+                                    <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17.5 19A5.5 5.5 0 0 0 17 8H15.5a9 9 0 1 0-11.9 9.9"/>
+                                        <path d="M12 12v6M9 15l3-3 3 3"/>
+                                    </svg>
+                                </div>
+                                <div class="cert-info">
+                                    <h3>AWS Certified Cloud Practitioner</h3>
+                                    <span class="cert-org">Amazon Web Services</span>
+                                    <span class="cert-year">2025</span>
+                                </div>
+                            </div>
+                            <div class="cert-card-back">
+                                <h3>AWS Practitioner</h3>
+                                <span class="cert-id">ID: AWS-CCP-98765</span>
+                                <p class="cert-back-desc">Validated cloud fundamentals, core AWS services, security, architecture, pricing, and support models.</p>
+                                <a href="https://aws.amazon.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm cert-verify-btn">
+                                    <span>Verify</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Cert Card 2: Meta -->
                     <div class="cert-card">
-                        <div class="cert-icon-wrapper meta-glow">
-                            <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                                <line x1="8" y1="21" x2="16" y2="21"/>
-                                <line x1="12" y1="17" x2="12" y2="21"/>
-                                <polyline points="10 8 8 10 10 12"/>
-                                <polyline points="14 8 16 10 14 12"/>
-                            </svg>
-                        </div>
-                        <div class="cert-info">
-                            <h3>Meta Front-End Developer</h3>
-                            <span class="cert-org">Meta / Coursera</span>
-                            <span class="cert-year">2024</span>
+                        <div class="cert-card-inner">
+                            <div class="cert-card-front">
+                                <div class="cert-icon-wrapper meta-glow">
+                                    <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                                        <line x1="8" y1="21" x2="16" y2="21"/>
+                                        <line x1="12" y1="17" x2="12" y2="21"/>
+                                        <polyline points="10 8 8 10 10 12"/>
+                                        <polyline points="14 8 16 10 14 12"/>
+                                    </svg>
+                                </div>
+                                <div class="cert-info">
+                                    <h3>Meta Front-End Developer</h3>
+                                    <span class="cert-org">Meta / Coursera</span>
+                                    <span class="cert-year">2024</span>
+                                </div>
+                            </div>
+                            <div class="cert-card-back">
+                                <h3>Meta Front-End</h3>
+                                <span class="cert-id">ID: META-FED-54321</span>
+                                <p class="cert-back-desc">Mastered HTML, CSS, JavaScript, React, UI design, version control (Git), and browser optimization.</p>
+                                <a href="https://coursera.org" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm cert-verify-btn">
+                                    <span>Verify</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Cert Card 3: MongoDB -->
                     <div class="cert-card">
-                        <div class="cert-icon-wrapper mongodb-glow">
-                            <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <ellipse cx="12" cy="5" rx="9" ry="3"/>
-                                <path d="M3 5v6c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-                                <path d="M3 11v6c0 1.66 4 3 9 3s9-1.34 9-3v-6"/>
-                            </svg>
-                        </div>
-                        <div class="cert-info">
-                            <h3>MongoDB Certified Developer</h3>
-                            <span class="cert-org">MongoDB University</span>
-                            <span class="cert-year">2024</span>
+                        <div class="cert-card-inner">
+                            <div class="cert-card-front">
+                                <div class="cert-icon-wrapper mongodb-glow">
+                                    <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                                        <path d="M3 5v6c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                                        <path d="M3 11v6c0 1.66 4 3 9 3s9-1.34 9-3v-6"/>
+                                    </svg>
+                                </div>
+                                <div class="cert-info">
+                                    <h3>MongoDB Certified Developer</h3>
+                                    <span class="cert-org">MongoDB University</span>
+                                    <span class="cert-year">2024</span>
+                                </div>
+                            </div>
+                            <div class="cert-card-back">
+                                <h3>MongoDB Developer</h3>
+                                <span class="cert-id">ID: MDB-DEV-67890</span>
+                                <p class="cert-back-desc">Expertise in document database schema design, modeling, querying, aggregation pipelines, and indexing.</p>
+                                <a href="https://learn.mongodb.com" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm cert-verify-btn">
+                                    <span>Verify</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -865,12 +912,15 @@
                             <form class="contact-form" id="contact-form" novalidate>
                                 <div class="form-group">
                                     <input type="text" id="contact-name" name="name" placeholder="Your Name" required class="form-input">
+                                    <label class="form-label">Your Name</label>
                                 </div>
                                 <div class="form-group">
                                     <input type="email" id="contact-email" name="email" placeholder="Your Email" required class="form-input">
+                                    <label class="form-label">Your Email</label>
                                 </div>
                                 <div class="form-group">
                                     <textarea id="contact-message" name="message" placeholder="Your Message" rows="5" required class="form-input form-textarea"></textarea>
+                                    <label class="form-label">Your Message</label>
                                 </div>
                                 
                                 <button type="submit" class="btn btn-primary btn-submit" id="contact-submit">
@@ -957,6 +1007,9 @@
 
     <!-- Lenis Smooth Scroll -->
     <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+
+    <!-- Three.js (3D Graphic Engine) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <!-- App Logic Script -->
     <script src="script.js"></script>

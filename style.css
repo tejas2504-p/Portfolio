@@ -3,7 +3,7 @@
    ========================================================================== */
 :root {
     /* Colors */
-    --color-bg: #ffffff;
+    --color-bg: #f5f5f7;
     --color-text-primary: #0f172a;
     --color-text-secondary: #475569;
     --color-blue: #0284c7;
@@ -119,7 +119,7 @@ body {
     height: 100vh;
     z-index: -1;
     overflow: hidden;
-    background: #ffffff;
+    background: var(--color-bg);
     pointer-events: none;
 }
 
@@ -138,7 +138,7 @@ body {
     width: 600px;
     height: 600px;
     background: radial-gradient(circle, rgba(14, 165, 233, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
-    animation: driftBlobBlue 25s ease-in-out infinite alternate;
+    animation: driftBlobBlue 25s ease-in-out infinite;
 }
 
 .glow-purple {
@@ -147,17 +147,29 @@ body {
     width: 700px;
     height: 700px;
     background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
-    animation: driftBlobPurple 30s ease-in-out infinite alternate;
+    animation: driftBlobPurple 30s ease-in-out infinite;
 }
 
-/* Particles Canvas */
+/* Particles Canvas (Foreground overlay) */
 #particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
+    pointer-events: none;
+}
+
+/* Aurora Blob Containers for GSAP Scroll Control */
+.glow-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    pointer-events: none;
+    will-change: transform;
 }
 
 /* Spotlight Overlay */
@@ -883,7 +895,7 @@ body {
     min-height: 100vh;
     padding: 8rem 4rem;
     position: relative;
-    background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 50%, #faf5ff 100%);
+    background: linear-gradient(135deg, rgba(245, 245, 247, 0.4) 0%, rgba(241, 245, 249, 0.4) 50%, rgba(250, 245, 255, 0.4) 100%);
     background-size: 300% 300%;
     animation: skillsGradientShift 15s ease infinite;
     box-sizing: border-box;
@@ -1515,25 +1527,39 @@ body {
 
 @keyframes driftBlobBlue {
     0% {
-        transform: translate(0px, 0px) scale(1);
+        transform: translate(0px, 0px) scale(1) rotate(0deg);
+        border-radius: 40% 60% 50% 50% / 40% 40% 60% 60%;
     }
-    50% {
-        transform: translate(100px, 80px) scale(1.2);
+    33% {
+        transform: translate(100px, 80px) scale(1.2) rotate(120deg);
+        border-radius: 55% 45% 60% 40% / 50% 50% 50% 50%;
+    }
+    66% {
+        transform: translate(-50px, 120px) scale(0.9) rotate(240deg);
+        border-radius: 45% 55% 50% 50% / 60% 40% 50% 50%;
     }
     100% {
-        transform: translate(-50px, 50px) scale(0.9);
+        transform: translate(0px, 0px) scale(1) rotate(360deg);
+        border-radius: 40% 60% 50% 50% / 40% 40% 60% 60%;
     }
 }
 
 @keyframes driftBlobPurple {
     0% {
-        transform: translate(0px, 0px) scale(1);
+        transform: translate(0px, 0px) scale(1) rotate(0deg);
+        border-radius: 50% 50% 40% 60% / 60% 50% 50% 40%;
     }
-    50% {
-        transform: translate(-80px, -100px) scale(1.15);
+    33% {
+        transform: translate(-80px, -100px) scale(1.15) rotate(120deg);
+        border-radius: 40% 60% 50% 50% / 45% 55% 45% 55%;
+    }
+    66% {
+        transform: translate(80px, -40px) scale(0.95) rotate(240deg);
+        border-radius: 60% 40% 60% 40% / 50% 60% 40% 50%;
     }
     100% {
-        transform: translate(50px, -40px) scale(0.95);
+        transform: translate(0px, 0px) scale(1) rotate(360deg);
+        border-radius: 50% 50% 40% 60% / 60% 50% 50% 40%;
     }
 }
 
@@ -1544,7 +1570,7 @@ body {
     min-height: 100vh;
     padding: 8rem 4rem;
     position: relative;
-    background: #ffffff;
+    background: transparent;
     box-sizing: border-box;
     scroll-margin-top: 80px;
 }
@@ -1640,7 +1666,7 @@ body {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background: #ffffff;
+    background: var(--color-bg);
     border: 4px solid rgba(15, 23, 42, 0.15);
     z-index: 10;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1770,7 +1796,7 @@ body {
     min-height: 80vh;
     padding: 8rem 4rem;
     position: relative;
-    background: #f8fafc;
+    background: transparent;
     box-sizing: border-box;
     scroll-margin-top: 80px;
 }
@@ -1799,23 +1825,91 @@ body {
 }
 
 .cert-card {
-    padding: 2.5rem 2rem;
+    height: 290px;
+    perspective: 1200px;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0 !important;
+    /* Scroll reveal setup */
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.cert-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cert-card:hover .cert-card-inner {
+    transform: rotateY(180deg);
+}
+
+.cert-card-front,
+.cert-card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     border-radius: 24px;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     box-shadow: var(--glass-shadow);
+    padding: 2.5rem 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
-                border-color var(--transition-fast);
-    /* Scroll reveal setup */
-    opacity: 0;
-    transform: translateY(30px);
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.cert-card-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(243, 244, 246, 0.98) 100%);
+}
+
+.cert-card-back h3 {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-primary);
+}
+
+.cert-id {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-purple);
+    margin-bottom: 0.8rem;
+    background: rgba(124, 58, 237, 0.05);
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(124, 58, 237, 0.1);
+}
+
+.cert-back-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+}
+
+.cert-verify-btn {
+    padding: 0.5rem 1.2rem !important;
+    font-size: 0.85rem !important;
+    border-radius: 12px !important;
 }
 
 /* Scroll reveal triggers */
@@ -1887,10 +1981,13 @@ body {
     color: var(--color-blue);
     border-color: rgba(2, 132, 199, 0.2);
 }
+.cert-card:hover:has(.aws-glow) .cert-card-front,
+.cert-card:hover:has(.aws-glow) .cert-card-back {
+    border-color: rgba(2, 132, 199, 0.25) !important;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05), 0 0 25px rgba(2, 132, 199, 0.12) !important;
+}
 .cert-card:hover:has(.aws-glow) {
-    transform: translateY(-8px) scale(1.04);
-    border-color: rgba(2, 132, 199, 0.25);
-    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05), 0 0 25px rgba(2, 132, 199, 0.12);
+    transform: translateY(-8px) scale(1.04) !important;
 }
 
 .cert-card:hover:has(.meta-glow) .meta-glow {
@@ -1898,10 +1995,13 @@ body {
     color: var(--color-purple);
     border-color: rgba(124, 58, 237, 0.2);
 }
+.cert-card:hover:has(.meta-glow) .cert-card-front,
+.cert-card:hover:has(.meta-glow) .cert-card-back {
+    border-color: rgba(124, 58, 237, 0.25) !important;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05), 0 0 25px rgba(124, 58, 237, 0.12) !important;
+}
 .cert-card:hover:has(.meta-glow) {
-    transform: translateY(-8px) scale(1.04);
-    border-color: rgba(124, 58, 237, 0.25);
-    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05), 0 0 25px rgba(124, 58, 237, 0.12);
+    transform: translateY(-8px) scale(1.04) !important;
 }
 
 .cert-card:hover:has(.mongodb-glow) .mongodb-glow {
@@ -1909,16 +2009,18 @@ body {
     color: #10b981;
     border-color: rgba(16, 185, 129, 0.2);
 }
+.cert-card:hover:has(.mongodb-glow) .cert-card-front,
+.cert-card:hover:has(.mongodb-glow) .cert-card-back {
+    border-color: rgba(16, 185, 129, 0.25) !important;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05), 0 0 25px rgba(16, 185, 129, 0.12) !important;
+}
 .cert-card:hover:has(.mongodb-glow) {
-    transform: translateY(-8px) scale(1.04);
-    border-color: rgba(16, 185, 129, 0.25);
-    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05), 0 0 25px rgba(16, 185, 129, 0.12);
+    transform: translateY(-8px) scale(1.04) !important;
 }
 .cert-card:hover:has(.mongodb-glow) .cert-year {
     color: #10b981;
     background: rgba(16, 185, 129, 0.06);
     border-color: rgba(16, 185, 129, 0.1);
-}
 }
 
 /* ==========================================================================
@@ -1928,7 +2030,7 @@ body {
     min-height: 70vh;
     padding: 8rem 4rem;
     position: relative;
-    background: #ffffff;
+    background: transparent;
     box-sizing: border-box;
     scroll-margin-top: 80px;
 }
@@ -2084,7 +2186,7 @@ body {
     min-height: 90vh;
     padding: 8rem 4rem;
     position: relative;
-    background: #ffffff;
+    background: transparent;
     box-sizing: border-box;
     scroll-margin-top: 80px;
 }
@@ -2328,7 +2430,7 @@ a.detail-value:hover {
    ========================================================================== */
 .footer {
     position: relative;
-    background: #ffffff;
+    background: transparent;
     width: 100%;
     overflow: hidden;
     z-index: 10;
@@ -2903,6 +3005,13 @@ a.detail-value:hover {
     }
     
     .cert-card {
+        padding: 0 !important;
+        height: auto;
+        min-height: 250px;
+    }
+    
+    .cert-card-front,
+    .cert-card-back {
         padding: 2rem 1.5rem;
         border-radius: 20px;
     }
@@ -3052,15 +3161,29 @@ a.detail-value:hover {
     }
 }
 
-/* 4. Project Card Enhancements */
+/* 4. Project Card Enhancements & 3D Cinematic Depth Focus */
 .project-card {
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
                 border-color 0.4s ease !important;
+    transform-style: preserve-3d;
 }
+
 .project-card:hover {
     box-shadow: 0 30px 60px rgba(15, 23, 42, 0.08), 
-                0 0 30px rgba(124, 58, 237, 0.12);
+                0 0 30px rgba(124, 58, 237, 0.12) !important;
+    z-index: 10 !important;
+    opacity: 1 !important;
+    filter: blur(0px) !important;
+}
+
+/* Recede other cards on hover */
+.projects-grid:has(.project-card:hover) .project-card:not(:hover) {
+    transform: translateZ(-80px) scale(0.94) !important;
+    opacity: 0.45 !important;
+    filter: blur(4px) grayscale(20%) !important;
 }
 .project-img {
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -3110,6 +3233,11 @@ a.detail-value:hover {
 .timeline-content:hover,
 .cert-card:hover {
     transform: translateY(-6px) scale(1.01) !important;
+}
+
+.timeline-content:hover,
+.cert-card:hover .cert-card-front,
+.cert-card:hover .cert-card-back {
     box-shadow: 0 25px 45px rgba(15, 23, 42, 0.05), 
                 0 0 20px rgba(124, 58, 237, 0.08) !important;
     border-color: rgba(124, 58, 237, 0.2) !important;
@@ -3139,7 +3267,9 @@ a.detail-value:hover {
 .form-input::placeholder {
     color: transparent !important;
 }
-.form-group.focused .form-label {
+.form-group.focused .form-label,
+.form-input:focus ~ .form-label,
+.form-input:not(:placeholder-shown) ~ .form-label {
     transform: translateY(-8px);
     font-size: 0.75rem;
     font-weight: 700;
@@ -3186,12 +3316,25 @@ a.detail-value:hover {
     width: 600px;
     height: 600px;
     background: radial-gradient(circle, rgba(236, 72, 153, 0.25) 0%, rgba(255, 255, 255, 0) 70%);
-    animation: driftBlobPink 28s ease-in-out infinite alternate;
+    animation: driftBlobPink 28s ease-in-out infinite;
 }
 @keyframes driftBlobPink {
-    0% { transform: translate(0px, 0px) scale(0.9); }
-    50% { transform: translate(-100px, 120px) scale(1.15); }
-    100% { transform: translate(120px, -60px) scale(0.95); }
+    0% {
+        transform: translate(0px, 0px) scale(0.9) rotate(0deg);
+        border-radius: 60% 40% 55% 45% / 45% 55% 45% 55%;
+    }
+    33% {
+        transform: translate(-100px, 120px) scale(1.15) rotate(-120deg);
+        border-radius: 45% 55% 40% 60% / 50% 45% 55% 50%;
+    }
+    66% {
+        transform: translate(120px, -60px) scale(0.95) rotate(-240deg);
+        border-radius: 50% 50% 60% 40% / 60% 50% 50% 40%;
+    }
+    100% {
+        transform: translate(0px, 0px) scale(0.9) rotate(-360deg);
+        border-radius: 60% 40% 55% 45% / 45% 55% 45% 55%;
+    }
 }
 
 
@@ -3220,6 +3363,50 @@ a.detail-value:hover {
 section {
     position: relative;
     z-index: 10;
+}
+
+/* 3D Perspective Containers & Child Optimizations */
+.projects-grid,
+.skills-categories-wrapper,
+.timeline-wrapper,
+.cert-grid,
+.stats-grid,
+.contact-grid {
+    perspective: 1200px;
+    transform-style: preserve-3d;
+}
+
+.project-card,
+.skills-category-card,
+.timeline-item,
+.cert-card,
+.stat-card,
+.contact-info-panel,
+.contact-form-panel {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: transform, opacity;
+}
+
+/* 3D Geometric Floating Canvas Container */
+.hero-3d-canvas-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140%;
+    height: 140%;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+@media (max-width: 992px) {
+    .hero-3d-canvas-container {
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+    }
 }
 
 /* Respect user preferences for reduced motion */

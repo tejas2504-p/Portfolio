@@ -35,16 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     requestAnimationFrame(updateSpotlight);
 
-    // =============================================================
-    // DYNAMIC BACKGROUND INJECTIONS (Aurora Blob & Floating Shapes)
-    // =============================================================
-    const bgWrapper = document.querySelector('.bg-wrapper');
-    if (bgWrapper && !prefersReducedMotion) {
-        // Inject Pink Aurora Blob
-        const pinkBlob = document.createElement('div');
-        pinkBlob.classList.add('glow-blob', 'glow-pink');
-        bgWrapper.appendChild(pinkBlob);
-    }
+    // Background blobs are statically loaded in index.html and wrapped in .glow-container elements
 
     // =============================================================
     // DYNAMIC SELF-DRAWING SECTION DIVIDERS
@@ -235,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas.getContext('2d');
     
     let particlesArray = [];
-    const maxParticles = 65; // Balanced performance & visuals
+    const maxParticles = 110; // Populated background network
     
     // Set Canvas Size
     function setCanvasSize() {
@@ -292,6 +283,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+
+
     // Initialize Particle Set
     function initParticles() {
         particlesArray = [];
@@ -302,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Draw lines between nearby particles (Constellation style)
     function connectParticles() {
-        let maxDistance = 110;
+        let maxDistance = 125; // Broader connections
         for (let i = 0; i < particlesArray.length; i++) {
             for (let j = i + 1; j < particlesArray.length; j++) {
                 let dx = particlesArray[i].x - particlesArray[j].x;
@@ -327,14 +320,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function animateParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
-        particlesArray.forEach(particle => {
-            particle.update();
-            particle.draw();
+        // Update and draw background particles
+        particlesArray.forEach(p => {
+            p.update();
+            p.draw();
         });
         
         connectParticles();
         requestAnimationFrame(animateParticles);
     }
+
+
 
     initParticles();
     animateParticles();
@@ -559,17 +555,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Animation variables that respect reduced-motion preferences
+    const rX = prefersReducedMotion ? 0 : 15;
+    const rY = prefersReducedMotion ? 0 : 15;
+    const zDepth = prefersReducedMotion ? 0 : -60;
+    const yOffset = prefersReducedMotion ? 10 : 50;
+    const xOffset = prefersReducedMotion ? 10 : 40;
+
     // 2. Skills Section - Category Cards & Skill Cards Stagger
     gsap.from('.skills-category-card', {
         opacity: 0,
-        y: 40,
-        duration: 0.8,
+        y: yOffset,
+        rotationX: rX,
+        z: zDepth,
+        transformOrigin: "top center",
+        duration: 1.0,
         stagger: 0.2,
-        ease: 'power3.out',
+        ease: 'power2.out',
         scrollTrigger: {
             trigger: '.skills-categories-wrapper',
             start: 'top 85%',
             onEnter: () => document.querySelector('.skills-section').classList.add('active'),
+        },
+        onStart: function() {
+            this.targets().forEach(el => el.classList.add('gsap-animating'));
+        },
+        onComplete: function() {
+            this.targets().forEach(el => {
+                el.classList.remove('gsap-animating');
+                gsap.set(el, { clearProps: 'transform,opacity' });
+                el.classList.add('active');
+            });
         }
     });
 
@@ -577,7 +593,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const cards = grid.querySelectorAll('.skill-card');
         gsap.from(cards, {
             opacity: 0,
-            y: 20,
+            y: prefersReducedMotion ? 5 : 20,
             duration: 0.6,
             stagger: 0.05,
             ease: 'power2.out',
@@ -601,10 +617,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Featured Projects Staggered Entrance
     gsap.from('.project-card', {
         opacity: 0,
-        y: 50,
-        duration: 0.8,
+        y: yOffset,
+        rotationX: rX,
+        z: zDepth,
+        transformOrigin: "top center",
+        duration: 1.0,
         stagger: 0.15,
-        ease: 'power3.out',
+        ease: 'power2.out',
         scrollTrigger: {
             trigger: '.projects-grid',
             start: 'top 85%',
@@ -627,13 +646,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const isLeft = item.classList.contains('left');
         gsap.from(item, {
             opacity: 0,
-            x: isLeft ? -60 : 60,
-            duration: 1.0,
-            ease: 'power3.out',
+            x: isLeft ? -xOffset : xOffset,
+            z: zDepth,
+            rotationY: isLeft ? -rY : rY,
+            transformOrigin: isLeft ? "right center" : "left center",
+            duration: 1.2,
+            ease: 'power2.out',
             scrollTrigger: {
                 trigger: item,
                 start: 'top 85%',
-                onEnter: () => item.classList.add('active'),
+            },
+            onStart: function() {
+                item.classList.add('gsap-animating');
+            },
+            onComplete: function() {
+                item.classList.remove('gsap-animating');
+                gsap.set(item, { clearProps: 'transform,opacity' });
+                item.classList.add('active');
             }
         });
     });
@@ -659,10 +688,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 6. Certifications Staggered Reveal
     gsap.from('.cert-card', {
         opacity: 0,
-        y: 40,
-        duration: 0.8,
+        y: yOffset,
+        rotationX: rX,
+        z: zDepth,
+        transformOrigin: "top center",
+        duration: 1.0,
         stagger: 0.15,
-        ease: 'power3.out',
+        ease: 'power2.out',
         scrollTrigger: {
             trigger: '.cert-grid',
             start: 'top 85%',
@@ -683,10 +715,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // 7. Achievements Staggered Reveal & Number Counters Trigger
     gsap.from('.stat-card', {
         opacity: 0,
-        y: 40,
-        duration: 0.8,
+        y: yOffset,
+        rotationX: rX,
+        z: zDepth,
+        transformOrigin: "top center",
+        duration: 1.0,
         stagger: 0.1,
-        ease: 'power3.out',
+        ease: 'power2.out',
         scrollTrigger: {
             trigger: '.stats-grid',
             start: 'top 85%',
@@ -710,25 +745,53 @@ document.addEventListener('DOMContentLoaded', () => {
     // 8. Contact Section Panel Reveals
     gsap.from('.contact-info-panel', {
         opacity: 0,
-        x: -50,
-        duration: 1.0,
-        ease: 'power3.out',
+        x: -xOffset,
+        z: zDepth,
+        rotationY: -rY,
+        transformOrigin: "right center",
+        duration: 1.2,
+        ease: 'power2.out',
         scrollTrigger: {
             trigger: '.contact-grid',
             start: 'top 80%',
-            onEnter: () => document.querySelector('.contact-info-panel').classList.add('active'),
+        },
+        onStart: function() {
+            const el = document.querySelector('.contact-info-panel');
+            if (el) el.classList.add('gsap-animating');
+        },
+        onComplete: function() {
+            const el = document.querySelector('.contact-info-panel');
+            if (el) {
+                el.classList.remove('gsap-animating');
+                gsap.set(el, { clearProps: 'transform,opacity' });
+                el.classList.add('active');
+            }
         }
     });
 
     gsap.from('.contact-form-panel', {
         opacity: 0,
-        x: 50,
-        duration: 1.0,
-        ease: 'power3.out',
+        x: xOffset,
+        z: zDepth,
+        rotationY: rY,
+        transformOrigin: "left center",
+        duration: 1.2,
+        ease: 'power2.out',
         scrollTrigger: {
             trigger: '.contact-grid',
             start: 'top 80%',
-            onEnter: () => document.querySelector('.contact-form-panel').classList.add('active'),
+        },
+        onStart: function() {
+            const el = document.querySelector('.contact-form-panel');
+            if (el) el.classList.add('gsap-animating');
+        },
+        onComplete: function() {
+            const el = document.querySelector('.contact-form-panel');
+            if (el) {
+                el.classList.remove('gsap-animating');
+                gsap.set(el, { clearProps: 'transform,opacity' });
+                el.classList.add('active');
+            }
         }
     });
 
@@ -737,27 +800,29 @@ document.addEventListener('DOMContentLoaded', () => {
     // =============================================================
     const projectCards = document.querySelectorAll('.project-card');
     
-    projectCards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left - (rect.width / 2); // offset from center
-            const y = e.clientY - rect.top - (rect.height / 2);
-            
-            const rotX = -(y / (rect.height / 2)) * 6;
-            const rotY = (x / (rect.width / 2)) * 6;
-            
-            card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.01)`;
-        });
+    if (!prefersReducedMotion) {
+        projectCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - (rect.width / 2); // offset from center
+                const y = e.clientY - rect.top - (rect.height / 2);
+                
+                const rotX = -(y / (rect.height / 2)) * 6;
+                const rotY = (x / (rect.width / 2)) * 6;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(40px) scale(1.03)`;
+            });
 
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
-            card.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)';
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0) scale(1)';
+                card.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)';
+            });
+            
+            card.addEventListener('mouseenter', () => {
+                card.style.transition = 'none';
+            });
         });
-        
-        card.addEventListener('mouseenter', () => {
-            card.style.transition = 'none';
-        });
-    });
+    }
 
     // =============================================================
     // ACHIEVEMENTS COUNTER ANIMATION FUNCTION
@@ -859,6 +924,141 @@ document.addEventListener('DOMContentLoaded', () => {
                 duration: 1.5,
                 easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             });
+        });
+    }
+    // =============================================================
+    // SCROLL-CONTROLLED AURORA SWELLS (GSAP ScrollTrigger)
+    // =============================================================
+    if (!prefersReducedMotion) {
+        const auroraTl = gsap.timeline({
+            scrollTrigger: {
+                trigger: 'body',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 1.5,
+            }
+        });
+
+        // Choreographed sequence of shifting/swelling background glows
+        auroraTl
+            // 1. Hero to About section
+            .to('.glow-blue-container', { xPercent: 25, yPercent: 30, scale: 1.35, duration: 1 }, 0)
+            .to('.glow-purple-container', { xPercent: -20, yPercent: -25, scale: 1.25, duration: 1 }, 0)
+            .to('.glow-pink-container', { xPercent: 15, yPercent: -15, scale: 1.2, duration: 1 }, 0)
+            
+            // 2. About to Skills section
+            .to('.glow-blue-container', { xPercent: 10, yPercent: 75, scale: 1.2, duration: 1 }, 1)
+            .to('.glow-purple-container', { xPercent: -45, yPercent: -50, scale: 1.55, duration: 1 }, 1)
+            .to('.glow-pink-container', { xPercent: -25, yPercent: 25, scale: 1.45, duration: 1 }, 1)
+            
+            // 3. Skills to Projects section
+            .to('.glow-blue-container', { xPercent: 50, yPercent: 110, scale: 1.6, duration: 1 }, 2)
+            .to('.glow-purple-container', { xPercent: -25, yPercent: -85, scale: 1.2, duration: 1 }, 2)
+            .to('.glow-pink-container', { xPercent: 35, yPercent: 50, scale: 1.7, duration: 1 }, 2)
+            
+            // 4. Projects to Experience/Certifications section
+            .to('.glow-blue-container', { xPercent: 15, yPercent: 150, scale: 1.25, duration: 1 }, 3)
+            .to('.glow-purple-container', { xPercent: -65, yPercent: -110, scale: 1.65, duration: 1 }, 3)
+            .to('.glow-pink-container', { xPercent: -10, yPercent: 85, scale: 1.35, duration: 1 }, 3)
+            
+            // 5. Experience to Contact/Footer section
+            .to('.glow-blue-container', { xPercent: 35, yPercent: 180, scale: 1.4, duration: 1 }, 4)
+            .to('.glow-purple-container', { xPercent: -35, yPercent: -130, scale: 1.4, duration: 1 }, 4)
+            .to('.glow-pink-container', { xPercent: 20, yPercent: 120, scale: 1.5, duration: 1 }, 4);
+    }
+
+    // =============================================================
+    // THREE.JS 3D GEOMETRIC FLOATING CANVAS
+    // =============================================================
+    const container3d = document.getElementById('hero-3d-canvas-container');
+    if (container3d && typeof THREE !== 'undefined' && !prefersReducedMotion) {
+        const scene = new THREE.Scene();
+        
+        const width = container3d.clientWidth || 400;
+        const height = container3d.clientHeight || 400;
+        
+        const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+        camera.position.z = 5.5;
+
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container3d.appendChild(renderer.domElement);
+
+        // Create 3D Holographic Particle Torus Knot
+        const geometry = new THREE.TorusKnotGeometry(1.4, 0.42, 160, 18);
+
+        // Purple Particles
+        const matPurple = new THREE.PointsMaterial({
+            size: 0.022,
+            color: 0x7c3aed, // Purple
+            transparent: true,
+            opacity: 0.45,
+            blending: THREE.AdditiveBlending
+        });
+        const pointsPurple = new THREE.Points(geometry, matPurple);
+        scene.add(pointsPurple);
+
+        // Blue Particles (slightly offset scale/rotation for holographic depth)
+        const matBlue = new THREE.PointsMaterial({
+            size: 0.022,
+            color: 0x0284c7, // Blue
+            transparent: true,
+            opacity: 0.45,
+            blending: THREE.AdditiveBlending
+        });
+        const pointsBlue = new THREE.Points(geometry, matBlue);
+        pointsBlue.scale.set(1.025, 1.025, 1.025);
+        pointsBlue.rotation.y = Math.PI / 6;
+        scene.add(pointsBlue);
+
+        // Track cursor coordinates for interactive tilt
+        let targetX = 0;
+        let targetY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            const normX = (e.clientX / window.innerWidth) - 0.5;
+            const normY = (e.clientY / window.innerHeight) - 0.5;
+            targetX = normY * 0.45; // X rotation targets Y cursor
+            targetY = normX * 0.45; // Y rotation targets X cursor
+        });
+
+        // GSAP ScrollTrigger to fade/shrink 3D canvas when user scrolls down
+        gsap.to(container3d, {
+            opacity: 0,
+            scale: 0.75,
+            scrollTrigger: {
+                trigger: '#home',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            }
+        });
+
+        // Animation Loop
+        function animate3d() {
+            pointsPurple.rotation.x += 0.002;
+            pointsPurple.rotation.y += 0.003;
+            
+            pointsBlue.rotation.x += 0.0015;
+            pointsBlue.rotation.y += 0.0025;
+
+            // Smoothly ease scene rotation to face cursor (lerp)
+            scene.rotation.x += (targetX - scene.rotation.x) * 0.05;
+            scene.rotation.y += (targetY - scene.rotation.y) * 0.05;
+
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate3d);
+        }
+        requestAnimationFrame(animate3d);
+
+        // Handle Resizing
+        window.addEventListener('resize', () => {
+            const w = container3d.clientWidth;
+            const h = container3d.clientHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
         });
     }
 });
