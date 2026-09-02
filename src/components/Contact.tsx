@@ -1,7 +1,10 @@
 export default function Contact() {
   return (
-    <section id="contact" className="py-32 md:py-48 bg-[var(--background)] border-t border-[var(--border-subtle)]">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 text-center">
+    <section id="contact" className="py-32 md:py-48 bg-[var(--background)] border-t border-[var(--border-subtle)] relative">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 text-center relative z-10">
+        <span className="text-xs font-mono tracking-widest text-[var(--text-muted)] uppercase mb-8 block">
+          AVAILABLE FOR FREELANCE & OPPORTUNITIES
+        </span>
         <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-[var(--text-primary)] mb-12 uppercase leading-[0.9]">
           LET&apos;S BUILD <br className="hidden sm:block" />
           SOMETHING TOGETHER.
@@ -15,7 +18,7 @@ export default function Contact() {
         <div className="flex flex-wrap justify-center gap-6">
           <a
             href="mailto:#"
-            className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors"
+            className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors bg-[var(--background)]"
           >
             <span className="text-sm font-semibold tracking-widest text-[var(--text-primary)] uppercase">
               GET IN TOUCH
@@ -28,7 +31,7 @@ export default function Contact() {
             href="#"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors"
+            className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors bg-[var(--background)]"
           >
             <span className="text-sm font-semibold tracking-widest text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] uppercase transition-colors">
               GITHUB
@@ -41,7 +44,7 @@ export default function Contact() {
             href="#"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors"
+            className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors bg-[var(--background)]"
           >
             <span className="text-sm font-semibold tracking-widest text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] uppercase transition-colors">
               LINKEDIN
@@ -52,7 +55,7 @@ export default function Contact() {
           </a>
           <a
             href="mailto:#"
-            className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors"
+            className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors bg-[var(--background)]"
           >
             <span className="text-sm font-semibold tracking-widest text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] uppercase transition-colors">
               EMAIL

@@ -9,8 +9,8 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-32 md:py-48 bg-[var(--background)] border-t border-[var(--border-subtle)]">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+    <section id="about" className="py-32 md:py-48 bg-[var(--background)] border-t border-[var(--border-subtle)] relative">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
         <SectionHeading number="02" title="ABOUT" subtitle="ABOUT ME" />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
@@ -26,6 +26,9 @@ export default function About() {
 
           {/* Right Column: Areas */}
           <div className="flex flex-col justify-center">
+            <span className="text-xs font-mono tracking-widest text-[var(--text-muted)] uppercase mb-8 block">
+              CURRENT FOCUS
+            </span>
             <div className="space-y-0 border-t border-[var(--border-subtle)]">
               {areas.map((area) => (
                 <div key={area.num} className="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-12 border-b border-[var(--border-subtle)] py-8">

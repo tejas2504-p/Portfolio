@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center pt-24 overflow-hidden bg-[var(--background)]">
+    <section className="relative min-h-screen flex flex-col justify-center pt-24 overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-full relative z-10 flex flex-col lg:flex-row items-center">
         {/* Left Content */}
         <div className="w-full lg:w-1/2">
@@ -34,10 +34,10 @@ export default function Hero() {
           </p>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6">
+          <div className="flex flex-col sm:flex-row gap-6 mb-16">
             <Link
               href="#projects"
-              className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors"
+              className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors bg-[var(--background)]"
             >
               <span className="text-sm font-semibold tracking-widest text-[var(--text-primary)] uppercase">
                 VIEW PROJECTS
@@ -50,7 +50,7 @@ export default function Hero() {
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors"
+              className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors bg-[var(--background)]"
             >
               <span className="text-sm font-semibold tracking-widest text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] uppercase transition-colors">
                 DOWNLOAD RESUME
@@ -60,10 +60,25 @@ export default function Hero() {
               </span>
             </a>
           </div>
+
+          {/* Technical Metadata */}
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-8 border-t border-[var(--border-subtle)]">
+            <span className="text-xs font-mono tracking-widest text-[var(--text-muted)] uppercase">
+              BASED IN INDIA
+            </span>
+            <span className="text-[var(--border-subtle)]">|</span>
+            <span className="text-xs font-mono tracking-widest text-[var(--text-muted)] uppercase">
+              FULL-STACK DEVELOPMENT
+            </span>
+            <span className="text-[var(--border-subtle)]">|</span>
+            <span className="text-xs font-mono tracking-widest text-[var(--text-muted)] uppercase">
+              AI / REAL-TIME SYSTEMS
+            </span>
+          </div>
         </div>
         
         {/* Right Content - Empty area for future 3D */}
-        <div className="hidden lg:block w-full lg:w-1/2 h-[600px]">
+        <div className="hidden lg:block w-full lg:w-1/2 h-[600px] pointer-events-none">
           {/* 3D Model will go here in future phases */}
         </div>
       </div>
