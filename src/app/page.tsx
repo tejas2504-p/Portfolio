@@ -1,8 +1,13 @@
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import About from "@/components/About";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold">Tejas Prajapati</h1>
-      <p className="mt-4 text-xl">Full-Stack Developer</p>
+    <main className="bg-[#050505] min-h-screen">
+      <Navbar />
+      <Hero />
+      <About />
     </main>
   );
 }
