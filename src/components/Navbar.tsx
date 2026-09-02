@@ -19,24 +19,27 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-[#050505]/90 backdrop-blur-md border-b border-white/5 transition-all">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+    <nav className="fixed top-0 w-full z-50 bg-[var(--background)] border-b border-[var(--border-subtle)] transition-all">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+        <div className="flex items-center justify-between h-24">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="text-white font-bold text-lg tracking-widest">
+            <Link
+              href="/"
+              className="text-[var(--text-primary)] font-bold text-sm tracking-[0.2em] uppercase"
+            >
               TEJAS PRAJAPATI
             </Link>
           </div>
 
           {/* Desktop Menu */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-8">
+            <div className="flex items-center gap-10">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-gray-400 hover:text-white transition-colors text-sm font-medium tracking-wide"
+                  className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors text-xs font-medium tracking-widest uppercase"
                 >
                   {link.name}
                 </Link>
@@ -48,33 +51,10 @@ export default function Navbar() {
           <div className="md:hidden flex items-center">
             <button
               onClick={toggleMenu}
-              className="text-gray-400 hover:text-white focus:outline-none"
+              className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors text-xs font-medium tracking-widest uppercase focus:outline-none"
               aria-expanded="false"
             >
-              <span className="sr-only">Open main menu</span>
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                {isOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
+              {isOpen ? "CLOSE" : "MENU"}
             </button>
           </div>
         </div>
@@ -82,14 +62,14 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-[#0a0a0a] border-b border-white/5">
-          <div className="px-4 pt-2 pb-6 space-y-1 sm:px-3 flex flex-col">
+        <div className="md:hidden bg-[var(--background)] border-b border-[var(--border-subtle)]">
+          <div className="px-6 pt-4 pb-8 flex flex-col gap-6">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="text-gray-400 hover:text-white block px-3 py-3 rounded-md text-base font-medium tracking-wide"
+                className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors text-sm font-medium tracking-[0.2em] uppercase"
               >
                 {link.name}
               </Link>

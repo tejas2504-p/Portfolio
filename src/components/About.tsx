@@ -1,3 +1,5 @@
+import SectionHeading from "./SectionHeading";
+
 export default function About() {
   const areas = [
     { num: "01", title: "FULL-STACK DEVELOPMENT" },
@@ -7,33 +9,30 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-32 bg-[#0a0a0a] border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+    <section id="about" className="py-32 md:py-48 bg-[var(--background)] border-t border-[var(--border-subtle)]">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+        <SectionHeading number="02" title="ABOUT" subtitle="ABOUT ME" />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
           {/* Left Column: Text */}
-          <div>
-            <h2 className="text-sm font-semibold tracking-widest text-gray-400 mb-8">
-              ABOUT ME
-            </h2>
-            <div className="space-y-8 text-xl sm:text-2xl text-gray-300 font-light leading-relaxed">
-              <p>
-                I&apos;m Tejas Prajapati, a Full-Stack Developer focused on building modern web applications, AI-powered systems and real-time experiences.
-              </p>
-              <p>
-                I enjoy working across frontend, backend, databases and cloud technologies.
-              </p>
-            </div>
+          <div className="space-y-8 text-xl sm:text-2xl text-[var(--text-secondary)] font-light leading-relaxed">
+            <p>
+              I&apos;m Tejas Prajapati, a Full-Stack Developer focused on building modern web applications, AI-powered systems and real-time experiences.
+            </p>
+            <p>
+              I enjoy working across frontend, backend, databases and cloud technologies.
+            </p>
           </div>
 
           {/* Right Column: Areas */}
           <div className="flex flex-col justify-center">
-            <div className="space-y-12">
+            <div className="space-y-0 border-t border-[var(--border-subtle)]">
               {areas.map((area) => (
-                <div key={area.num} className="group flex items-start space-x-6 border-b border-white/10 pb-6">
-                  <span className="text-sm font-mono text-gray-500 mt-1">
+                <div key={area.num} className="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-12 border-b border-[var(--border-subtle)] py-8">
+                  <span className="text-sm font-mono tracking-widest text-[var(--text-muted)] shrink-0">
                     {area.num}
                   </span>
-                  <h3 className="text-xl sm:text-2xl font-medium tracking-wide text-white group-hover:text-gray-300 transition-colors">
+                  <h3 className="text-xl sm:text-2xl font-light tracking-wide text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors uppercase">
                     {area.title}
                   </h3>
                 </div>

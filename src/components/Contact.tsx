@@ -1,45 +1,65 @@
 export default function Contact() {
   return (
-    <section id="contact" className="py-32 bg-[#0a0a0a] border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter text-white mb-8">
+    <section id="contact" className="py-32 md:py-48 bg-[var(--background)] border-t border-[var(--border-subtle)]">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 text-center">
+        <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-[var(--text-primary)] mb-12 uppercase leading-[0.9]">
           LET&apos;S BUILD <br className="hidden sm:block" />
           SOMETHING TOGETHER.
         </h2>
         
-        <p className="text-lg sm:text-xl text-gray-400 font-light max-w-2xl mx-auto mb-16 leading-relaxed">
+        <p className="text-xl sm:text-2xl text-[var(--text-secondary)] font-light max-w-2xl mx-auto mb-20 leading-relaxed">
           Have an idea, opportunity or project? <br />
           Let&apos;s connect.
         </p>
         
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+        <div className="flex flex-wrap justify-center gap-6">
           <a
             href="mailto:#"
-            className="px-8 py-4 bg-white text-black font-semibold tracking-widest text-sm uppercase rounded hover:bg-gray-200 transition-colors"
+            className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors"
           >
-            GET IN TOUCH
+            <span className="text-sm font-semibold tracking-widest text-[var(--text-primary)] uppercase">
+              GET IN TOUCH
+            </span>
+            <span className="text-[var(--text-primary)] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
+              ↗
+            </span>
           </a>
           <a
             href="#"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-8 py-4 bg-transparent border border-white/20 text-white font-semibold tracking-widest text-sm uppercase rounded hover:bg-white/5 transition-colors"
+            className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors"
           >
-            GITHUB
+            <span className="text-sm font-semibold tracking-widest text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] uppercase transition-colors">
+              GITHUB
+            </span>
+            <span className="text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-all group-hover:translate-x-1 group-hover:-translate-y-1">
+              ↗
+            </span>
           </a>
           <a
             href="#"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-8 py-4 bg-transparent border border-white/20 text-white font-semibold tracking-widest text-sm uppercase rounded hover:bg-white/5 transition-colors"
+            className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors"
           >
-            LINKEDIN
+            <span className="text-sm font-semibold tracking-widest text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] uppercase transition-colors">
+              LINKEDIN
+            </span>
+            <span className="text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-all group-hover:translate-x-1 group-hover:-translate-y-1">
+              ↗
+            </span>
           </a>
           <a
             href="mailto:#"
-            className="px-8 py-4 bg-transparent border border-white/20 text-white font-semibold tracking-widest text-sm uppercase rounded hover:bg-white/5 transition-colors"
+            className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors"
           >
-            EMAIL
+            <span className="text-sm font-semibold tracking-widest text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] uppercase transition-colors">
+              EMAIL
+            </span>
+            <span className="text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-all group-hover:translate-x-1 group-hover:-translate-y-1">
+              ↗
+            </span>
           </a>
         </div>
       </div>

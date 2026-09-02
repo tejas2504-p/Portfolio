@@ -1,59 +1,70 @@
 import Link from "next/link";
 
 export default function Hero() {
-  const labels = ["FULL STACK", "AI", "REAL-TIME SYSTEMS", "CLOUD"];
-
   return (
-    <section className="relative min-h-screen flex flex-col justify-center pt-20 overflow-hidden bg-[#050505]">
-      {/* Background accents (optional subtlety without complex animations) */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-white/[0.02] rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-white/[0.01] rounded-full blur-3xl" />
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full relative z-10">
-        <div className="max-w-4xl">
-          {/* Labels */}
-          <div className="flex flex-wrap gap-3 mb-8">
-            {labels.map((label) => (
-              <span
-                key={label}
-                className="px-3 py-1 text-xs font-semibold tracking-widest text-gray-400 border border-white/10 rounded-full bg-white/5"
-              >
-                {label}
-              </span>
-            ))}
+    <section className="relative min-h-screen flex flex-col justify-center pt-24 overflow-hidden bg-[var(--background)]">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-full relative z-10 flex flex-col lg:flex-row items-center">
+        {/* Left Content */}
+        <div className="w-full lg:w-1/2">
+          {/* Section Indicator */}
+          <div className="flex items-center gap-4 mb-12">
+            <span className="text-sm font-mono tracking-widest text-[var(--text-muted)]">
+              01
+            </span>
+            <span className="text-[var(--border-primary)]">/</span>
+            <span className="text-sm font-mono tracking-widest text-[var(--text-muted)] uppercase">
+              INTRO
+            </span>
           </div>
 
           {/* Main Typography */}
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tighter mb-4">
-            TEJAS PRAJAPATI
+          <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[7rem] font-bold text-[var(--text-primary)] tracking-tighter leading-[0.9] mb-8 uppercase">
+            TEJAS <br />
+            PRAJAPATI
           </h1>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-gray-400 mb-8 tracking-tight">
+          
+          <h2 className="text-lg sm:text-xl font-mono tracking-widest text-[var(--text-secondary)] mb-12 uppercase">
             FULL-STACK DEVELOPER
           </h2>
 
-          <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mb-12 leading-relaxed">
+          <p className="text-lg sm:text-xl text-[var(--text-secondary)] max-w-lg mb-16 leading-relaxed font-light">
             I build scalable web applications, <br className="hidden sm:block" />
             AI-powered systems and real-time <br className="hidden sm:block" />
             digital experiences.
           </p>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-6">
             <Link
               href="#projects"
-              className="px-8 py-4 bg-white text-black font-semibold rounded hover:bg-gray-200 transition-colors text-center tracking-wide"
+              className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors"
             >
-              VIEW PROJECTS
+              <span className="text-sm font-semibold tracking-widest text-[var(--text-primary)] uppercase">
+                VIEW PROJECTS
+              </span>
+              <span className="text-[var(--text-primary)] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
+                ↗
+              </span>
             </Link>
             <a
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-4 bg-transparent border border-white/20 text-white font-semibold rounded hover:bg-white/5 transition-colors text-center tracking-wide"
+              className="group flex items-center justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] transition-colors"
             >
-              DOWNLOAD RESUME
+              <span className="text-sm font-semibold tracking-widest text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] uppercase transition-colors">
+                DOWNLOAD RESUME
+              </span>
+              <span className="text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-all group-hover:translate-x-1 group-hover:-translate-y-1">
+                ↗
+              </span>
             </a>
           </div>
+        </div>
+        
+        {/* Right Content - Empty area for future 3D */}
+        <div className="hidden lg:block w-full lg:w-1/2 h-[600px]">
+          {/* 3D Model will go here in future phases */}
         </div>
       </div>
     </section>

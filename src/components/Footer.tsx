@@ -1,32 +1,32 @@
 export default function Footer() {
   return (
-    <footer className="py-8 bg-[#050505] border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-        <div className="text-gray-500 text-sm font-light">
-          © 2026 Tejas Prajapati
+    <footer className="py-12 bg-[var(--background)] border-t border-[var(--border-subtle)]">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col sm:flex-row justify-between items-center gap-6">
+        <div className="text-[var(--text-muted)] text-xs font-mono tracking-widest uppercase">
+          © 2026 TEJAS PRAJAPATI
         </div>
         
-        <div className="flex gap-6">
+        <div className="flex gap-8">
           <a
             href="#"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-500 hover:text-white transition-colors text-sm font-medium"
+            className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors text-xs font-semibold tracking-widest uppercase"
           >
-            GitHub
+            GITHUB
           </a>
           <a
             href="#"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-500 hover:text-white transition-colors text-sm font-medium"
+            className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors text-xs font-semibold tracking-widest uppercase"
           >
-            LinkedIn
+            LINKEDIN
           </a>
         </div>
         
-        <div className="text-gray-500 text-sm font-light">
-          Built with Next.js
+        <div className="text-[var(--text-muted)] text-xs font-mono tracking-widest uppercase">
+          BUILT WITH NEXT.JS
         </div>
       </div>
     </footer>
