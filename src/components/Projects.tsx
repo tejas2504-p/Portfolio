@@ -1,9 +1,28 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { projects } from "@/data/projects";
 import SectionHeading from "./SectionHeading";
+import { animateSectionHeading, animateStagger } from "@/lib/animations/sectionAnimations";
+import { gsap } from "@/lib/animations/gsap";
 
 export default function Projects() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      animateSectionHeading(sectionRef.current!, reduceMotion);
+      animateStagger(sectionRef.current!, "[data-animate='project-card']", reduceMotion);
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="projects" className="py-32 md:py-48 bg-[var(--background)] border-t border-[var(--border-subtle)]">
+    <section ref={sectionRef} id="projects" className="py-32 md:py-48 bg-[var(--background)] border-t border-[var(--border-subtle)]">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <SectionHeading number="04" title="PROJECTS" subtitle="SELECTED WORKS" />
 
@@ -11,6 +30,7 @@ export default function Projects() {
           {projects.map((project) => (
             <div
               key={project.id}
+              data-animate="project-card"
               className="group flex flex-col lg:flex-row gap-12 lg:gap-24 border-b border-[var(--border-subtle)] pb-24 last:border-0 last:pb-0"
             >
               <div className="lg:w-5/12">

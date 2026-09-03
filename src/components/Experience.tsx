@@ -1,6 +1,25 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import SectionHeading from "./SectionHeading";
+import { animateSectionHeading, animateStagger } from "@/lib/animations/sectionAnimations";
+import { gsap } from "@/lib/animations/gsap";
 
 export default function Experience() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      animateSectionHeading(sectionRef.current!, reduceMotion);
+      animateStagger(sectionRef.current!, "[data-animate='timeline-entry']", reduceMotion);
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   const experiences = [
     {
       title: "Software Development",
@@ -17,7 +36,7 @@ export default function Experience() {
   ];
 
   return (
-    <section id="experience" className="py-32 md:py-48 bg-[var(--background)] border-t border-[var(--border-subtle)]">
+    <section ref={sectionRef} id="experience" className="py-32 md:py-48 bg-[var(--background)] border-t border-[var(--border-subtle)]">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
         <SectionHeading number="05" title="EXPERIENCE" subtitle="WORK HISTORY" />
 
@@ -26,6 +45,7 @@ export default function Experience() {
             {experiences.map((exp, index) => (
               <div
                 key={index}
+                data-animate="timeline-entry"
                 className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group"
               >
                 {/* Timeline dot */}

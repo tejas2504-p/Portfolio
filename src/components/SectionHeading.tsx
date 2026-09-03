@@ -10,7 +10,7 @@ export default function SectionHeading({
   subtitle,
 }: SectionHeadingProps) {
   return (
-    <div className="mb-20 sm:mb-32">
+    <div data-animate="heading" className="mb-20 sm:mb-32">
       <div className="flex items-center gap-4 mb-8">
         <span className="text-sm font-mono tracking-widest text-[var(--text-muted)]">
           {number}

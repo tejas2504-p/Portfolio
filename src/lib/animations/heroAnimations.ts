@@ -59,6 +59,21 @@ export const animateHeroEntrance = (
         0.3
       );
     }
+
+    // Scroll Indicator fade out on scroll
+    const scrollIndicator = container.querySelector("[data-hero-scroll-indicator]");
+    if (scrollIndicator) {
+      gsap.to(scrollIndicator, {
+        opacity: 0,
+        y: 20,
+        scrollTrigger: {
+          trigger: container,
+          start: "top top",
+          end: "bottom center",
+          scrub: true,
+        },
+      });
+    }
   }, container);
 
   return ctx;
