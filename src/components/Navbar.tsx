@@ -39,9 +39,10 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors text-xs font-medium tracking-widest uppercase"
+                  className="relative group text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors text-[10px] sm:text-xs font-semibold tracking-widest uppercase focus-visible:outline-none focus-visible:text-[var(--text-primary)]"
                 >
                   {link.name}
+                  <span className="absolute -bottom-2 left-0 w-full h-[1px] bg-[var(--text-primary)] scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100 transition-transform duration-300 origin-left"></span>
                 </Link>
               ))}
             </div>

@@ -82,7 +82,7 @@ export default function Hero() {
           <div data-hero-actions className="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-12 lg:mb-20 w-full sm:w-auto">
             <Link
               href="#projects"
-              className="group w-full sm:w-auto flex items-center justify-center sm:justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] hover:bg-[var(--background-secondary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-primary)] transition-all duration-300 bg-[var(--background)] rounded-[2px]"
+              className="group w-full sm:w-auto flex items-center justify-center sm:justify-between gap-4 px-8 py-4 border border-[var(--border-primary)] hover:border-[var(--text-primary)] hover:bg-[var(--background-secondary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-primary)] transition-all duration-300 bg-[var(--background)] rounded-none"
             >
               <span className="text-sm font-mono tracking-widest text-[var(--text-primary)] uppercase transition-transform duration-300 group-hover:translate-x-1">
                 VIEW PROJECTS
@@ -95,7 +95,7 @@ export default function Hero() {
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group w-full sm:w-auto flex items-center justify-center sm:justify-between gap-4 px-8 py-4 border border-[var(--border-subtle)] hover:border-[var(--text-primary)] hover:bg-[var(--background-secondary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-primary)] transition-all duration-300 bg-[var(--background)] rounded-[2px]"
+              className="group w-full sm:w-auto flex items-center justify-center sm:justify-between gap-4 px-8 py-4 border border-[var(--border-subtle)] hover:border-[var(--text-primary)] hover:bg-[var(--background-secondary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--text-primary)] transition-all duration-300 bg-[var(--background)] rounded-none"
             >
               <span className="text-sm font-mono tracking-widest text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] uppercase transition-all duration-300 group-hover:translate-x-1">
                 DOWNLOAD RESUME
