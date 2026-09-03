@@ -24,7 +24,7 @@ class CanvasErrorBoundary extends Component<{children: ReactNode, fallback: Reac
 export default function ThreeCanvas() {
   return (
     <div 
-      className="w-full h-[350px] sm:h-[450px] lg:h-[600px] border border-[var(--border-subtle)] flex items-center justify-center relative overflow-hidden bg-[var(--background)] group transition-colors hover:border-[var(--border-primary)] duration-700"
+      className="w-full h-full flex items-center justify-center relative overflow-hidden bg-transparent group transition-colors duration-700"
       style={{
         transform: "translate(var(--mouse-x, 0px), var(--mouse-y, 0px))",
         transition: "transform 0.2s cubic-bezier(0.2, 0, 0, 1)"

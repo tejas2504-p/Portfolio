@@ -41,10 +41,10 @@ export default function About() {
   }, []);
 
   const capabilities = [
-    { num: "01", title: "FULL-STACK DEVELOPMENT", desc: "Building scalable architectures and dynamic front-end interfaces." },
-    { num: "02", title: "AI & INTELLIGENT SYSTEMS", desc: "Integrating machine learning models and AI-driven automation." },
-    { num: "03", title: "REAL-TIME APPLICATIONS", desc: "Developing low-latency WebSockets and interactive experiences." },
-    { num: "04", title: "CLOUD & DEVOPS", desc: "Deploying and managing robust modern cloud infrastructures." },
+    { num: "01", title: "TESTING & QUALITY ASSURANCE", desc: "Writing reliable, well-tested code with CI/CD pipelines and automated checks." },
+    { num: "02", title: "SYSTEM DESIGN & ARCHITECTURE", desc: "Designing scalable, maintainable systems with clean, modular architecture." },
+    { num: "03", title: "API & DATABASE DESIGN", desc: "Building robust REST/GraphQL APIs and efficient, well-structured databases." },
+    { num: "04", title: "SECURITY & PERFORMANCE", desc: "Optimizing applications for speed while following secure coding practices." },
   ];
 
   return (
@@ -65,17 +65,17 @@ export default function About() {
 
           {/* CENTER/MAIN: large About heading and introduction */}
           <div className="lg:col-span-6 flex flex-col">
-            <h2 data-animate="about-heading" className="text-[clamp(3.5rem,7vw,6.5rem)] font-bold tracking-tighter text-[var(--text-primary)] uppercase leading-[0.85] mb-12 sm:mb-16">
+            <h2 data-animate="about-heading" className="text-[clamp(3.5rem,7vw,6.5rem)] font-[family-name:var(--font-heading-thin)] font-light tracking-[0.1em] text-[var(--text-primary)] uppercase leading-[1.1] mb-12 sm:mb-16">
               ABOUT <br />
               ME.
             </h2>
 
             <div className="space-y-8 text-xl sm:text-2xl text-[var(--text-secondary)] font-light leading-relaxed max-w-2xl">
               <p data-animate="paragraph">
-                I am Tejas Prajapati, a <strong className="font-medium text-[var(--text-primary)]">Full-Stack Developer</strong> dedicated to engineering premium digital products.
+                I'm Tejas Prajapati, a <strong className="font-medium text-[var(--text-primary)]">Full-Stack Developer</strong> specializing in building scalable, high-performance web applications and digital solutions. My expertise spans frontend, backend, databases, real-time systems, AI integration, and cloud technologies.
               </p>
               <p data-animate="paragraph">
-                My expertise lies in architecting scalable web applications, integrating AI-powered systems, and building high-performance real-time applications using modern cloud technologies.
+                I focus on clean architecture, performance, maintainability, and intuitive user experiences, transforming complex requirements into reliable, production-ready software.
               </p>
             </div>
           </div>
