@@ -65,12 +65,12 @@ export default function About() {
 
           {/* CENTER/MAIN: large About heading and introduction */}
           <div className="lg:col-span-6 flex flex-col">
-            <h2 data-animate="about-heading" className="text-[clamp(3.5rem,7vw,6.5rem)] font-[family-name:var(--font-heading-thin)] font-light tracking-[0.1em] text-[var(--text-primary)] uppercase leading-[1.1] mb-12 sm:mb-16">
+            <h2 data-animate="about-heading" className="text-[clamp(3.5rem,7vw,6.5rem)] font-[family-name:var(--font-heading)] font-bold tracking-tighter text-[var(--text-primary)] uppercase leading-[0.85] mb-12 sm:mb-16">
               ABOUT <br />
               ME.
             </h2>
 
-            <div className="space-y-8 text-xl sm:text-2xl text-[var(--text-secondary)] font-light leading-relaxed max-w-2xl">
+            <div className="space-y-8 text-xl sm:text-2xl text-[var(--text-secondary)] font-[family-name:var(--font-para-clean)] font-light leading-relaxed max-w-2xl">
               <p data-animate="paragraph">
                 I'm Tejas Prajapati, a <strong className="font-medium text-[var(--text-primary)]">Full-Stack Developer</strong> specializing in building scalable, high-performance web applications and digital solutions. My expertise spans frontend, backend, databases, real-time systems, AI integration, and cloud technologies.
               </p>

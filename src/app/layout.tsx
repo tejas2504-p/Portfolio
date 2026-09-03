@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Roboto_Mono, Jost, Playfair_Display, Outfit } from "next/font/google";
+import { Inter, Roboto_Mono, Jost, Playfair_Display, Outfit, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 
@@ -10,6 +10,11 @@ const inter = Inter({
 
 const robotoMono = Roboto_Mono({
   variable: "--font-mono",
+  subsets: ["latin"],
+});
+
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space",
   subsets: ["latin"],
 });
 
@@ -61,7 +66,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${robotoMono.variable} ${jost.variable} ${outfit.variable} ${playfair.variable} h-full antialiased`}
+      className={`${inter.variable} ${robotoMono.variable} ${spaceGrotesk.variable} ${jost.variable} ${outfit.variable} ${playfair.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">
         <SmoothScroll />

@@ -22,28 +22,28 @@ export default function Skills() {
   const skillCategories = [
     {
       num: "01",
-      title: "FRONTEND",
-      skills: ["JavaScript", "TypeScript", "React.js", "Next.js", "Redux", "Tailwind CSS"],
+      title: "Programming Languages",
+      skills: ["JavaScript", "Java"],
     },
     {
       num: "02",
-      title: "BACKEND",
-      skills: ["Node.js", "Express.js"],
+      title: "Web Technologies",
+      skills: ["Tailwind CSS", "React.js", "Next.js", "Node.js", "Express.js"],
     },
     {
       num: "03",
-      title: "DATABASE",
-      skills: ["MongoDB", "MySQL", "PostgreSQL"],
+      title: "Databases",
+      skills: ["MongoDB", "MySQL"],
     },
     {
       num: "04",
-      title: "CLOUD & DEVOPS",
-      skills: ["AWS", "Docker", "Kubernetes", "Jenkins"],
+      title: "Tools & Technologies",
+      skills: [ "Git", "GitHub", "Postman", "VS Code", "Socket.io" ,"Figma"],
     },
     {
       num: "05",
-      title: "TOOLS",
-      skills: ["Git", "GitHub", "Postman", "VS Code"],
+      title: "Other Skills",
+      skills: ["Authentication & Authorization (JWT)", "RESTful APIs", "Troubleshooting", " Database Design"],
     },
   ];
 
@@ -85,7 +85,7 @@ export default function Skills() {
 
           {/* CENTER/RIGHT: large heading and categories */}
           <div className="lg:col-span-10 flex flex-col">
-            <h2 data-animate="skills-heading" className="text-[clamp(3.5rem,7vw,6.5rem)] font-bold tracking-tighter text-[var(--text-primary)] uppercase leading-[0.85] mb-20 sm:mb-24">
+            <h2 data-animate="skills-heading" className="text-[clamp(3.5rem,7vw,6.5rem)] font-[family-name:var(--font-heading)] font-bold tracking-tighter text-[var(--text-primary)] uppercase leading-[0.85] mb-20 sm:mb-24">
               SKILLS
             </h2>
 

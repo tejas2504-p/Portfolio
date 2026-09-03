@@ -100,7 +100,7 @@ export default function Experience() {
 
           {/* CENTER/RIGHT: large heading and timeline */}
           <div className="lg:col-span-10 flex flex-col">
-            <h2 data-animate="experience-heading" className="text-[clamp(3.5rem,7vw,6.5rem)] font-bold tracking-tighter text-[var(--text-primary)] uppercase leading-[0.85] mb-20 sm:mb-28">
+            <h2 data-animate="experience-heading" className="text-[clamp(3.5rem,7vw,6.5rem)] font-[family-name:var(--font-heading)] font-bold tracking-tighter text-[var(--text-primary)] uppercase leading-[0.85] mb-20 sm:mb-28">
               EXPERIENCE
             </h2>
 

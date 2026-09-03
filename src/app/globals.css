@@ -23,7 +23,9 @@
   --font-sans: var(--font-inter);
   --font-mono: var(--font-mono);
   --font-serif: "Times New Roman", Times, serif;
+  --font-heading: var(--font-space);
   --font-heading-thin: var(--font-jost);
+  --font-para-clean: var(--font-outfit);
 }
 
 html {

@@ -33,9 +33,13 @@ export default function Footer() {
               SOCIALS
             </span>
             <div className="flex flex-col gap-3">
-              {['GITHUB', 'LINKEDIN', 'EMAIL'].map(item => (
-                <a key={item} href={item === 'EMAIL' ? 'mailto:placeholder@email.com' : '#'} target={item !== 'EMAIL' ? '_blank' : undefined} rel={item !== 'EMAIL' ? 'noopener noreferrer' : undefined} className="group flex items-center gap-2 text-sm font-semibold tracking-widest text-[var(--text-secondary)] hover:text-[var(--text-primary)] uppercase transition-colors w-fit focus-visible:outline-none focus-visible:text-[var(--text-primary)]">
-                  {item}
+              {[
+                { name: 'GITHUB', url: 'https://github.com/tejas2504-p' },
+                { name: 'LINKEDIN', url: 'https://www.linkedin.com/in/tejas-prajapati25p/' },
+                { name: 'EMAIL', url: 'mailto:tejasprajapati2504@email.com' }
+              ].map(item => (
+                <a key={item.name} href={item.url} target={item.name !== 'EMAIL' ? '_blank' : undefined} rel={item.name !== 'EMAIL' ? 'noopener noreferrer' : undefined} className="group flex items-center gap-2 text-sm font-semibold tracking-widest text-[var(--text-secondary)] hover:text-[var(--text-primary)] uppercase transition-colors w-fit focus-visible:outline-none focus-visible:text-[var(--text-primary)]">
+                  {item.name}
                   <span className="text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
                     ↗
                   </span>
