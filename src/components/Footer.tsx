@@ -32,15 +32,15 @@ export default function Footer() {
             <span className="text-[10px] font-mono tracking-widest text-[var(--text-muted)] uppercase mb-2">
               SOCIALS
             </span>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col w-full border-t border-[var(--border-subtle)]">
               {[
+                { name: 'EMAIL', url: 'mailto:tejasprajapati2504@email.com' },
                 { name: 'GITHUB', url: 'https://github.com/tejas2504-p' },
-                { name: 'LINKEDIN', url: 'https://www.linkedin.com/in/tejas-prajapati25p/' },
-                { name: 'EMAIL', url: 'mailto:tejasprajapati2504@email.com' }
+                { name: 'LINKEDIN', url: 'https://www.linkedin.com/in/tejas-prajapati25p/' }
               ].map(item => (
-                <a key={item.name} href={item.url} target={item.name !== 'EMAIL' ? '_blank' : undefined} rel={item.name !== 'EMAIL' ? 'noopener noreferrer' : undefined} className="group flex items-center gap-2 text-sm font-semibold tracking-widest text-[var(--text-secondary)] hover:text-[var(--text-primary)] uppercase transition-colors w-fit focus-visible:outline-none focus-visible:text-[var(--text-primary)]">
+                <a key={item.name} href={item.url} target={item.name !== 'EMAIL' ? '_blank' : undefined} rel={item.name !== 'EMAIL' ? 'noopener noreferrer' : undefined} className="group flex items-center justify-between py-6 lg:py-8 text-xs sm:text-sm font-semibold tracking-widest text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--background-secondary)] uppercase transition-all w-full focus-visible:outline-none focus-visible:text-[var(--text-primary)] border-b border-[var(--border-subtle)] px-4">
                   {item.name}
-                  <span className="text-[var(--text-muted)] group-hover:text-[var(--text-primary)] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
+                  <span className="text-[var(--text-muted)] text-[10px] group-hover:text-[var(--text-primary)] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
                     ↗
                   </span>
                 </a>

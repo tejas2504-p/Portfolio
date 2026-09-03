@@ -136,7 +136,7 @@ export default function Contact() {
 
               {/* SECONDARY ACTIONS */}
               <div className="flex flex-col border border-[var(--border-subtle)] bg-[var(--background-secondary)]">
-                <a href="mailto:placeholder@email.com" data-animate="contact-link" className="group flex items-center justify-between p-6 md:p-8 border-b border-[var(--border-subtle)] hover:border-[var(--text-muted)] hover:bg-[var(--background)] focus-visible:bg-[var(--background)] transition-all duration-300 outline-none">
+                <a href="mailto:tejasprajapati2504@email.com" data-animate="contact-link" className="group flex items-center justify-between p-6 md:p-8 border-b border-[var(--border-subtle)] hover:border-[var(--text-muted)] hover:bg-[var(--background)] focus-visible:bg-[var(--background)] transition-all duration-300 outline-none">
                   <span className="text-sm font-semibold tracking-widest text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] group-focus-visible:text-[var(--text-primary)] uppercase transition-colors">
                     EMAIL
                   </span>
@@ -144,7 +144,7 @@ export default function Contact() {
                     ↗
                   </span>
                 </a>
-                <a href="#" target="_blank" rel="noopener noreferrer" data-animate="contact-link" className="group flex items-center justify-between p-6 md:p-8 border-b border-[var(--border-subtle)] hover:border-[var(--text-muted)] hover:bg-[var(--background)] focus-visible:bg-[var(--background)] transition-all duration-300 outline-none">
+                <a href="https://github.com/tejas2504-p" target="_blank" rel="noopener noreferrer" data-animate="contact-link" className="group flex items-center justify-between p-6 md:p-8 border-b border-[var(--border-subtle)] hover:border-[var(--text-muted)] hover:bg-[var(--background)] focus-visible:bg-[var(--background)] transition-all duration-300 outline-none">
                   <span className="text-sm font-semibold tracking-widest text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] group-focus-visible:text-[var(--text-primary)] uppercase transition-colors">
                     GITHUB
                   </span>
@@ -152,7 +152,7 @@ export default function Contact() {
                     ↗
                   </span>
                 </a>
-                <a href="#" target="_blank" rel="noopener noreferrer" data-animate="contact-link" className="group flex items-center justify-between p-6 md:p-8 hover:bg-[var(--background)] focus-visible:bg-[var(--background)] transition-all duration-300 outline-none">
+                <a href="https://www.linkedin.com/in/tejas-prajapati25p/" target="_blank" rel="noopener noreferrer" data-animate="contact-link" className="group flex items-center justify-between p-6 md:p-8 hover:bg-[var(--background)] focus-visible:bg-[var(--background)] transition-all duration-300 outline-none">
                   <span className="text-sm font-semibold tracking-widest text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] group-focus-visible:text-[var(--text-primary)] uppercase transition-colors">
                     LINKEDIN
                   </span>
