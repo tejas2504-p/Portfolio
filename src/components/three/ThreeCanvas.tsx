@@ -1,7 +1,25 @@
 "use client";
 
 import { Canvas } from "@react-three/fiber";
+import React, { Component, ReactNode } from "react";
 import Scene3D from "./Scene3D";
+
+// Error boundary to prevent entire site crash on WebGL failure
+class CanvasErrorBoundary extends Component<{children: ReactNode, fallback: ReactNode}, {hasError: boolean}> {
+  constructor(props: {children: ReactNode, fallback: ReactNode}) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  render() {
+    if (this.state.hasError) {
+      return <>{this.props.fallback}</>;
+    }
+    return <>{this.props.children}</>;
+  }
+}
 
 export default function ThreeCanvas() {
   return (
@@ -38,13 +56,26 @@ export default function ThreeCanvas() {
       
       {/* 3D Canvas */}
       <div className="absolute inset-0 z-10 pointer-events-auto">
-        <Canvas
-          camera={{ position: [0, 0, 6.5], fov: 45 }}
-          gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
-          dpr={[1, 2]}
+        <CanvasErrorBoundary 
+          fallback={
+            <div className="w-full h-full flex flex-col items-center justify-center gap-2 bg-[var(--background)]/80 backdrop-blur-md p-4">
+              <span className="text-[10px] text-[var(--text-muted)] font-mono uppercase tracking-widest whitespace-nowrap">
+                3D Visual Offline
+              </span>
+              <span className="text-[10px] text-[var(--text-muted)] opacity-50 font-mono uppercase tracking-widest whitespace-nowrap">
+                WebGL not supported
+              </span>
+            </div>
+          }
         >
-          <Scene3D />
-        </Canvas>
+          <Canvas
+            camera={{ position: [0, 0, 6.5], fov: 45 }}
+            gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+            dpr={[1, 1.5]}
+          >
+            <Scene3D />
+          </Canvas>
+        </CanvasErrorBoundary>
       </div>
 
     </div>
