@@ -5,39 +5,53 @@ export interface Milestone {
   title: string;
   description: string;
   technologies: string[];
+  status?: string;
 }
 
 export const journeyMilestones: Milestone[] = [
   {
     id: "foundation",
     number: "01",
-    category: "FUNDAMENTALS",
+    category: "Computer Engineering",
     title: "FOUNDATION",
-    description: "Learning computer science fundamentals, programming, databases, and web development.",
-    technologies: ["C++", "Java", "HTML/CSS", "JavaScript", "SQL"]
+    description: "Built a strong foundation in programming, object-oriented programming, databases, data structures, and software engineering concepts.",
+    technologies: ["C++", "Java", "DSA", "SQL", "OOP"],
+    status: "2021"
   },
   {
     id: "fullstack",
     number: "02",
-    category: "ENGINEERING",
+    category: "Modern Web Applications",
     title: "FULL-STACK DEVELOPMENT",
-    description: "Building full-stack applications using React, Node.js, Express.js, MongoDB and modern web technologies.",
-    technologies: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"]
+    description: "Started building complete web applications using React, Next.js, Node.js, Express.js, MongoDB, PostgreSQL and REST APIs.",
+    technologies: ["React", "Next.js", "Node.js", "Express", "MongoDB", "PostgreSQL"],
+    status: "2022"
   },
   {
     id: "realtime-ai",
     number: "03",
-    category: "ADVANCED SYSTEMS",
+    category: "Advanced Projects",
     title: "REAL-TIME + AI",
-    description: "Working on projects involving real-time communication, AI integration, automation, and intelligent applications.",
-    technologies: ["Socket.IO", "WebSockets", "OpenAI", "Discord.js"]
+    description: "Explored real-time systems, WebSockets/Socket.IO, AI APIs, automation, and intelligent application development.",
+    technologies: ["Socket.IO", "WebSockets", "AI Integration", "Automation"],
+    status: "2023"
   },
   {
-    id: "production",
+    id: "hackathons",
     number: "04",
-    category: "ARCHITECTURE",
-    title: "BUILDING FOR PRODUCTION",
-    description: "Focusing on scalable architecture, performance, clean code, cloud technologies, and production-ready development.",
-    technologies: ["Next.js", "TypeScript", "AWS", "Docker", "CI/CD"]
+    category: "Learning by Building",
+    title: "PROJECTS + HACKATHONS",
+    description: "Developed multiple projects and participated in hackathons to apply technical concepts to practical problems.",
+    technologies: ["Rapid Prototyping", "Git/GitHub", "Problem Solving", "Team Collaboration"],
+    status: "2023 - 2024"
+  },
+  {
+    id: "current",
+    number: "05",
+    category: "Production-Oriented Development",
+    title: "CURRENT FOCUS",
+    description: "Currently focusing on scalable architecture, performance, cloud technologies, DevOps, AI integration, and creating polished production-ready applications.",
+    technologies: ["Cloud Infrastructure", "DevOps", "Scalability", "Performance Optimization"],
+    status: "PRESENT"
   }
 ];

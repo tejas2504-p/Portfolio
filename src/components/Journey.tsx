@@ -10,20 +10,30 @@ export default function Journey() {
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-16 lg:gap-8">
           
           {/* LEFT: technical section label / index */}
-          <div className="lg:col-span-2 flex flex-col" data-animate="journey-heading">
+          <div className="lg:col-span-3 flex flex-col" data-animate="journey-heading">
             <div className="flex items-center gap-4 lg:flex-col lg:items-start lg:gap-3">
               <span className="text-sm font-mono tracking-widest text-[var(--text-muted)]">05</span>
               <span className="text-[var(--border-primary)] lg:hidden">/</span>
               <span className="text-sm font-mono tracking-widest text-[var(--text-muted)] uppercase">DEVELOPMENT PATH</span>
-              <div className="hidden lg:block w-full h-[1px] bg-[var(--border-subtle)] mt-4"></div>
+              <div className="hidden lg:block w-full h-[1px] bg-[var(--border-subtle)] mt-4 mb-8"></div>
             </div>
+            
+            <p className="hidden lg:block text-sm font-[family-name:var(--font-para-clean)] text-[var(--text-muted)] leading-relaxed max-w-[200px]">
+              From learning fundamentals to building real-world systems, every project has been part of the process.
+            </p>
           </div>
 
           {/* CENTER/RIGHT: large heading and timeline */}
-          <div className="lg:col-span-10 flex flex-col">
-            <h2 data-animate="journey-heading" className="text-[clamp(3.5rem,7vw,6.5rem)] font-[family-name:var(--font-heading)] font-bold tracking-tighter text-[var(--text-primary)] uppercase leading-[0.85] mb-20 sm:mb-28">
+          <div className="lg:col-span-9 flex flex-col">
+            <h2 data-animate="journey-heading" className="text-[clamp(3.5rem,7vw,6.5rem)] font-[family-name:var(--font-heading)] font-bold tracking-tighter text-[var(--text-primary)] uppercase leading-[0.85] mb-8">
               JOURNEY.
             </h2>
+            
+            <p data-animate="journey-heading" className="lg:hidden text-base font-[family-name:var(--font-para-clean)] text-[var(--text-muted)] leading-relaxed mb-16 max-w-lg">
+              From learning fundamentals to building real-world systems, every project has been part of the process.
+            </p>
+            
+            <div className="hidden lg:block w-full h-[1px] bg-[var(--border-subtle)] mb-16 opacity-0 lg:opacity-100"></div>
 
             <div className="flex flex-col border-t border-[var(--border-subtle)]">
               {journeyMilestones.map((milestone) => (
@@ -35,13 +45,20 @@ export default function Journey() {
                 >
                   
                   {/* LEFT COLUMN: Number & Category */}
-                  <div className="w-full md:w-[200px] lg:w-[250px] shrink-0 flex flex-row md:flex-col justify-between md:justify-start items-center md:items-start mb-8 md:mb-0">
+                  <div className="w-full md:w-[220px] lg:w-[280px] shrink-0 flex flex-row md:flex-col justify-between md:justify-start items-center md:items-start mb-8 md:mb-0">
                     <span className="text-4xl md:text-5xl font-[family-name:var(--font-heading)] font-light text-[var(--text-muted)] opacity-50 group-hover:text-[var(--text-primary)] group-hover:opacity-100 group-focus-within:text-[var(--text-primary)] group-focus-within:opacity-100 transition-all duration-500">
                       {milestone.number}
                     </span>
-                    <span className="text-[10px] sm:text-xs font-mono tracking-widest text-[var(--text-primary)] md:text-[var(--text-muted)] opacity-80 md:opacity-50 md:mt-4 uppercase group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-500">
-                      {milestone.category}
-                    </span>
+                    <div className="flex flex-col items-end md:items-start md:mt-4 gap-1">
+                      <span className="text-[10px] sm:text-xs font-mono tracking-widest text-[var(--text-primary)] md:text-[var(--text-muted)] opacity-80 md:opacity-50 uppercase group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-500 text-right md:text-left max-w-[150px]">
+                        {milestone.category}
+                      </span>
+                      {milestone.status && (
+                        <span className="text-[10px] font-mono tracking-widest text-[var(--text-muted)] opacity-40 uppercase">
+                          {milestone.status}
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   {/* RIGHT COLUMN: Content */}
