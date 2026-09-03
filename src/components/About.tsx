@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import SectionHeading from "./SectionHeading";
-import { animateSectionHeading, animateStagger } from "@/lib/animations/sectionAnimations";
+import { animateStagger } from "@/lib/animations/sectionAnimations";
 import { gsap } from "@/lib/animations/gsap";
 
 export default function About() {
@@ -13,8 +12,8 @@ export default function About() {
     if (!sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      animateSectionHeading(sectionRef.current!, reduceMotion);
-
+      animateStagger(sectionRef.current!, "[data-animate='about-heading']", reduceMotion);
+      
       const paragraphs = sectionRef.current!.querySelectorAll("[data-animate='paragraph']");
       if (!reduceMotion && paragraphs.length) {
         gsap.fromTo(
@@ -41,47 +40,67 @@ export default function About() {
     return () => ctx.revert();
   }, []);
 
-  const areas = [
-    { num: "01", title: "FULL-STACK DEVELOPMENT" },
-    { num: "02", title: "AI & AUTOMATION" },
-    { num: "03", title: "REAL-TIME APPLICATIONS" },
-    { num: "04", title: "CLOUD & DEVOPS" },
+  const capabilities = [
+    { num: "01", title: "FULL-STACK DEVELOPMENT", desc: "Building scalable architectures and dynamic front-end interfaces." },
+    { num: "02", title: "AI & INTELLIGENT SYSTEMS", desc: "Integrating machine learning models and AI-driven automation." },
+    { num: "03", title: "REAL-TIME APPLICATIONS", desc: "Developing low-latency WebSockets and interactive experiences." },
+    { num: "04", title: "CLOUD & DEVOPS", desc: "Deploying and managing robust modern cloud infrastructures." },
   ];
 
   return (
     <section ref={sectionRef} id="about" className="py-32 md:py-48 bg-[var(--background)] border-t border-[var(--border-subtle)] relative">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
-        <SectionHeading number="02" title="ABOUT" subtitle="ABOUT ME" />
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
-          {/* Left Column: Text */}
-          <div className="space-y-8 text-xl sm:text-2xl text-[var(--text-secondary)] font-light leading-relaxed">
-            <p data-animate="paragraph">
-              I&apos;m Tejas Prajapati, a Full-Stack Developer focused on building modern web applications, AI-powered systems and real-time experiences.
-            </p>
-            <p data-animate="paragraph">
-              I enjoy working across frontend, backend, databases and cloud technologies.
-            </p>
+        
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-16 lg:gap-8">
+          
+          {/* LEFT: technical section label / index */}
+          <div className="lg:col-span-2 flex flex-col" data-animate="about-heading">
+            <div className="flex items-center gap-4 lg:flex-col lg:items-start lg:gap-3">
+              <span className="text-sm font-mono tracking-widest text-[var(--text-muted)]">02</span>
+              <span className="text-[var(--border-primary)] lg:hidden">/</span>
+              <span className="text-sm font-mono tracking-widest text-[var(--text-muted)] uppercase">ABOUT</span>
+              <div className="hidden lg:block w-full h-[1px] bg-[var(--border-subtle)] mt-4"></div>
+            </div>
           </div>
 
-          {/* Right Column: Areas */}
-          <div className="flex flex-col justify-center">
-            <span data-animate="capability" className="text-xs font-mono tracking-widest text-[var(--text-muted)] uppercase mb-8 block">
-              CURRENT FOCUS
-            </span>
-            <div className="space-y-0 border-t border-[var(--border-subtle)]">
-              {areas.map((area) => (
-                <div key={area.num} data-animate="capability" className="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-12 border-b border-[var(--border-subtle)] py-8">
-                  <span className="text-sm font-mono tracking-widest text-[var(--text-muted)] shrink-0">
-                    {area.num}
-                  </span>
-                  <h3 className="text-xl sm:text-2xl font-light tracking-wide text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors uppercase">
-                    {area.title}
-                  </h3>
+          {/* CENTER/MAIN: large About heading and introduction */}
+          <div className="lg:col-span-6 flex flex-col">
+            <h2 data-animate="about-heading" className="text-[clamp(3.5rem,7vw,6.5rem)] font-bold tracking-tighter text-[var(--text-primary)] uppercase leading-[0.85] mb-12 sm:mb-16">
+              ABOUT <br />
+              ME.
+            </h2>
+
+            <div className="space-y-8 text-xl sm:text-2xl text-[var(--text-secondary)] font-light leading-relaxed max-w-2xl">
+              <p data-animate="paragraph">
+                I am Tejas Prajapati, a <strong className="font-medium text-[var(--text-primary)]">Full-Stack Developer</strong> dedicated to engineering premium digital products.
+              </p>
+              <p data-animate="paragraph">
+                My expertise lies in architecting scalable web applications, integrating AI-powered systems, and building high-performance real-time applications using modern cloud technologies.
+              </p>
+            </div>
+          </div>
+
+          {/* RIGHT: small capability information */}
+          <div className="lg:col-span-4 flex flex-col lg:pl-10 xl:pl-16 lg:border-l lg:border-[var(--border-subtle)] mt-8 lg:mt-0">
+            <div className="flex flex-col border-t border-[var(--border-subtle)]">
+              {capabilities.map((area) => (
+                <div key={area.num} data-animate="capability" className="group flex flex-col gap-3 py-8 border-b border-[var(--border-subtle)] hover:border-[var(--text-secondary)] hover:bg-[var(--background-secondary)] transition-colors duration-500 cursor-default p-4 -mx-4 rounded-sm">
+                  <div className="flex items-center gap-4">
+                    <span className="text-xs font-mono tracking-widest text-[var(--text-muted)] group-hover:text-[var(--text-primary)] opacity-60 group-hover:opacity-100 transition-all duration-300">
+                      {area.num}
+                    </span>
+                    <h4 className="text-xs font-semibold tracking-widest text-[var(--text-primary)] uppercase transition-transform duration-300 group-hover:translate-x-1">
+                      {area.title}
+                    </h4>
+                  </div>
+                  <p className="text-sm text-[var(--text-secondary)] font-light leading-relaxed transition-transform duration-300 group-hover:translate-x-1">
+                    {area.desc}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
+
         </div>
       </div>
     </section>
