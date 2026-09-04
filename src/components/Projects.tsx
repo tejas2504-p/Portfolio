@@ -35,6 +35,174 @@ function ProjectImage({ src, alt, className }: { src: string; alt: string; class
   );
 }
 
+function ProjectCarousel({ images, alt, className }: { images: string[]; alt: string; className: string }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [direction, setDirection] = useState(1);
+  const prevIndexRef = useRef(currentIndex);
+  
+  const [reduceMotion, setReduceMotion] = useState(false);
+  useEffect(() => {
+    setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }, []);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isHovered || reduceMotion) return;
+    const timer = setInterval(() => {
+      setDirection(1);
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [isHovered, images.length, reduceMotion]);
+
+  const goToNext = (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    setDirection(1);
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const goToPrev = (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    setDirection(-1);
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!touchStart) return;
+    const touchEnd = e.changedTouches[0].clientX;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+    
+    if (isLeftSwipe) {
+      setDirection(1);
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    } else if (isRightSwipe) {
+      setDirection(-1);
+      setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+    }
+    setTouchStart(null);
+  };
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    
+    const elements = containerRef.current.querySelectorAll('.carousel-image-container');
+    
+    if (reduceMotion) {
+      elements.forEach((el, idx) => {
+        (el as HTMLElement).style.opacity = idx === currentIndex ? '1' : '0';
+        (el as HTMLElement).style.zIndex = idx === currentIndex ? '1' : '0';
+        (el as HTMLElement).style.transition = 'opacity 0.2s ease-in-out';
+      });
+      return;
+    }
+
+    const currentEl = elements[currentIndex] as HTMLElement;
+    const prevEl = elements[prevIndexRef.current] as HTMLElement;
+    
+    if (currentIndex !== prevIndexRef.current) {
+      // Animate outgoing
+      gsap.to(prevEl, {
+        opacity: 0,
+        xPercent: direction * -10,
+        scale: 0.95,
+        duration: 1.2,
+        ease: "power3.out",
+        zIndex: 0,
+        overwrite: "auto"
+      });
+
+      // Animate incoming
+      gsap.fromTo(currentEl, 
+        { opacity: 0, xPercent: direction * 10, scale: 1.05 },
+        { opacity: 1, xPercent: 0, scale: 1, duration: 1.2, ease: "power3.out", zIndex: 1, overwrite: "auto" }
+      );
+    } else {
+      // First load or no change
+      gsap.set(currentEl, { opacity: 1, xPercent: 0, scale: 1, zIndex: 1 });
+      elements.forEach((el, idx) => {
+        if (idx !== currentIndex) {
+          gsap.set(el, { opacity: 0, zIndex: 0 });
+        }
+      });
+    }
+
+    prevIndexRef.current = currentIndex;
+  }, [currentIndex, direction, reduceMotion]);
+
+  return (
+    <div 
+      className={`relative w-full h-full group/carousel ${className}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      ref={containerRef}
+    >
+      <div className="absolute inset-0 w-full h-full overflow-hidden bg-[var(--background)]">
+        {images.map((img, idx) => (
+          <div 
+            key={`${img}-${idx}`}
+            className="carousel-image-container absolute inset-0 w-full h-full will-change-transform"
+            style={{ 
+              opacity: idx === currentIndex ? 1 : 0,
+              zIndex: idx === currentIndex ? 1 : 0,
+              pointerEvents: idx === currentIndex ? 'auto' : 'none'
+            }}
+          >
+            <ProjectImage src={img} alt={`${alt} - Image ${idx + 1}`} className="w-full h-full object-contain" />
+          </div>
+        ))}
+      </div>
+
+      {/* Navigation Arrows */}
+      <div className="absolute inset-0 flex items-center justify-between p-4 sm:p-6 opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-500 z-20 pointer-events-none">
+        <button 
+          onClick={goToPrev}
+          className="w-10 h-10 flex items-center justify-center rounded-full bg-black/40 border border-white/10 text-white backdrop-blur-md pointer-events-auto hover:bg-black/70 hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 group/btn"
+          aria-label="Previous project image"
+        >
+          <svg className="w-5 h-5 transition-transform group-hover/btn:-translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button 
+          onClick={goToNext}
+          className="w-10 h-10 flex items-center justify-center rounded-full bg-black/40 border border-white/10 text-white backdrop-blur-md pointer-events-auto hover:bg-black/70 hover:scale-105 transition-all focus:outline-none focus:ring-2 focus:ring-white/50 group/btn"
+          aria-label="Next project image"
+        >
+          <svg className="w-5 h-5 transition-transform group-hover/btn:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+
+      {/* Pagination */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center z-20 px-4 py-2.5 rounded-full bg-black/40 backdrop-blur-md border border-white/10 opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-500">
+        <div className="flex gap-2 items-center">
+          {images.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={(e) => {
+                e.preventDefault();
+                if (idx === currentIndex) return;
+                setDirection(idx > currentIndex ? 1 : -1);
+                setCurrentIndex(idx);
+              }}
+              aria-label={`Go to image ${idx + 1}`}
+              className={`h-[2px] transition-all duration-500 focus:outline-none ${idx === currentIndex ? 'w-6 bg-white' : 'w-2 bg-white/30 hover:bg-white/50'}`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -169,10 +337,10 @@ export default function Projects() {
                   {/* CENTER: Project Visual Area */}
                   <div className={`project-image-wrapper relative w-full overflow-hidden border border-[var(--border-subtle)] mb-8 bg-[var(--background-secondary)] ${index === 0 ? 'aspect-[4/3] sm:aspect-[16/9] lg:aspect-[21/9]' : 'aspect-[4/3]'}`}>
                     <div className="absolute inset-0 bg-[var(--background)] opacity-0 group-hover:opacity-10 group-focus-within:opacity-10 transition-opacity duration-700 z-10 pointer-events-none"></div>
-                    <ProjectImage
-                      src={project.image}
+                    <ProjectCarousel
+                      images={project.images || [project.image]}
                       alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.03] motion-safe:group-focus-within:scale-[1.03]"
+                      className="transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.03] motion-safe:group-focus-within:scale-[1.03]"
                     />
                   </div>
                   

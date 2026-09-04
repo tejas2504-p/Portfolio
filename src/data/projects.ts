@@ -6,6 +6,7 @@ export interface Project {
   description: string;
   technologies: string[];
   image: string;
+  images: string[];
   githubUrl: string | null;
   liveUrl: string | null;
 }
@@ -18,7 +19,12 @@ export const projects: Project[] = [
     category: "REAL-TIME MULTIPLAYER",
     description: "A full-stack real-time multiplayer 8 Ball Pool game with secure authentication, matchmaking and synchronized live gameplay.",
     technologies: ["MERN Stack", "Socket.IO", "MongoDB"],
-    image: "/projects/8-ball-pool.webp",
+    image: "/projects/cue1.jpeg",
+    images: [
+      "/projects/cue1.jpeg",
+      "/projects/cue2.jpeg",
+      "/projects/cue3.jpeg"
+    ],
     githubUrl: "https://github.com/tejas2504-p/Cue-Arena",
     liveUrl: null,
   },
@@ -30,6 +36,12 @@ export const projects: Project[] = [
     description: "An AI-powered Discord bot capable of intelligent conversations and server interactions with persistent chat memory.",
     technologies: ["Node.js", "Discord.js", "AI", "MongoDB"],
     image: "/projects/ai-discord-bot.webp",
+    images: [
+      "/projects/ai-discord-bot.webp",
+      "/projects/ai-discord-bot-2.webp",
+      "/projects/ai-discord-bot-3.webp",
+      "/projects/ai-discord-bot-4.webp"
+    ],
     githubUrl: "https://github.com/tejas2504-p/Autonomous-Discord-Agent",
     liveUrl: null,
   },
@@ -41,6 +53,12 @@ export const projects: Project[] = [
     description: "An AI-powered civic complaint management platform designed to help users submit, manage and track government grievances.",
     technologies: ["React", "Node.js", "MongoDB", "AI"],
     image: "/projects/government-grievance.webp",
+    images: [
+      "/projects/government-grievance.webp",
+      "/projects/government-grievance-2.webp",
+      "/projects/government-grievance-3.webp",
+      "/projects/government-grievance-4.webp"
+    ],
     githubUrl: "https://github.com/tejas2504-p/smart-civic-grievance-system",
     liveUrl: null,
   },
