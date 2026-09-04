@@ -28,7 +28,7 @@ export default function Navbar() {
             href="/"
             className="text-[var(--text-primary)] font-bold text-sm tracking-[0.1em]"
           >
-            TEJAS PRAJAPATI
+            // hello world !! Welcome to my portfolio
           </Link>
         </div>
 

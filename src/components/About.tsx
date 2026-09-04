@@ -54,17 +54,42 @@ export default function About() {
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-16 lg:gap-8">
           
           {/* LEFT: technical section label / index */}
-          <div className="lg:col-span-2 flex flex-col" data-animate="about-heading">
+          <div className="lg:col-span-3 flex flex-col" data-animate="about-heading">
             <div className="flex items-center gap-4 lg:flex-col lg:items-start lg:gap-3">
               <span className="text-sm font-mono tracking-widest text-[var(--text-muted)]">02</span>
               <span className="text-[var(--border-primary)] lg:hidden">/</span>
               <span className="text-sm font-mono tracking-widest text-[var(--text-muted)] uppercase">ABOUT</span>
-              <div className="hidden lg:block w-full h-[1px] bg-[var(--border-subtle)] mt-4"></div>
+              <div className="hidden lg:block w-full h-[1px] bg-[var(--border-subtle)] mt-4 mb-8"></div>
+            </div>
+
+            {/* EDUCATION (Desktop only - Left Side) */}
+            <div data-animate="paragraph" className="hidden lg:flex flex-col p-6 lg:p-5 xl:p-6 border border-[var(--border-subtle)] hover:border-[var(--text-muted)] transition-all duration-500 hover:-translate-y-1 rounded-sm bg-transparent group mt-8 lg:mr-8 xl:mr-12">
+              <span className="text-[10px] font-mono tracking-widest text-[var(--text-muted)] uppercase mb-6 block">EDUCATION.</span>
+              
+              <h3 className="text-lg lg:text-base xl:text-lg font-medium text-[var(--text-primary)] tracking-tight mb-2">
+                B.Tech — Information Technology
+              </h3>
+              
+              <p className="text-sm text-[var(--text-secondary)] mb-8 font-light">
+                Bharati Vidyapeeth (Deemed to be University)
+              </p>
+              
+              <div className="flex flex-col gap-6 text-sm">
+                <div>
+                  <span className="block text-[10px] font-mono tracking-widest text-[var(--text-muted)] uppercase mb-1">CGPA</span>
+                  <span className="text-[var(--text-primary)] font-mono">8.5 / 10</span>
+                </div>
+                
+                <div>
+                  <span className="block text-[10px] font-mono tracking-widest text-[var(--text-muted)] uppercase mb-1">Status</span>
+                  <span className="text-[var(--text-primary)] font-mono">Currently pursuing — Final Year</span>
+                </div>
+              </div>
             </div>
           </div>
 
           {/* CENTER/MAIN: large About heading and introduction */}
-          <div className="lg:col-span-6 flex flex-col">
+          <div className="lg:col-span-5 flex flex-col">
             <h2 data-animate="about-heading" className="text-[clamp(3.5rem,7vw,6.5rem)] font-[family-name:var(--font-heading)] font-bold tracking-tighter text-[var(--text-primary)] uppercase leading-[0.85] mb-12 sm:mb-16">
               ABOUT <br />
               ME.
@@ -77,6 +102,31 @@ export default function About() {
               <p data-animate="paragraph">
                 I focus on clean architecture, performance, maintainability, and intuitive user experiences, transforming complex requirements into reliable, production-ready software.
               </p>
+            </div>
+
+            {/* EDUCATION */}
+            <div data-animate="paragraph" className="lg:hidden mt-16 sm:mt-20 p-6 sm:p-8 border border-[var(--border-subtle)] hover:border-[var(--text-muted)] transition-all duration-500 hover:-translate-y-1 rounded-sm bg-transparent group max-w-2xl">
+              <span className="text-[10px] font-mono tracking-widest text-[var(--text-muted)] uppercase mb-6 block">EDUCATION.</span>
+              
+              <h3 className="text-lg sm:text-xl font-medium text-[var(--text-primary)] tracking-tight mb-2">
+                B.Tech — Information Technology
+              </h3>
+              
+              <p className="text-sm text-[var(--text-secondary)] mb-8 font-light">
+                Bharati Vidyapeeth (Deemed to be University)
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-6 sm:gap-12 text-sm">
+                <div>
+                  <span className="block text-[10px] font-mono tracking-widest text-[var(--text-muted)] uppercase mb-1">CGPA</span>
+                  <span className="text-[var(--text-primary)] font-mono">8.5 / 10</span>
+                </div>
+                
+                <div>
+                  <span className="block text-[10px] font-mono tracking-widest text-[var(--text-muted)] uppercase mb-1">Status</span>
+                  <span className="text-[var(--text-primary)] font-mono">Currently pursuing — Final Year</span>
+                </div>
+              </div>
             </div>
           </div>
 
