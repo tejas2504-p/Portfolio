@@ -14,7 +14,7 @@ export default function Navbar() {
     { name: "ABOUT", href: "#about", hasDropdown: false },
     { name: "SKILLS", href: "#skills", hasDropdown: false },
     { name: "PROJECTS", href: "#projects", hasDropdown: true },
-    { name: "EXPERIENCE", href: "#experience", hasDropdown: false },
+    { name: "JOURNEY", href: "#journey", hasDropdown: false },
     { name: "CONTACT", href: "#contact", hasDropdown: false },
   ];
 

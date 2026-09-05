@@ -9,7 +9,7 @@ export default function Footer() {
               TEJAS PRAJAPATI
             </h2>
             <p className="text-sm font-mono tracking-widest text-[var(--text-secondary)] uppercase">
-              FULL-STACK DEVELOPER
+              SOFTWARE DEVELOPER
             </p>
           </div>
 
@@ -19,7 +19,7 @@ export default function Footer() {
               NAVIGATION
             </span>
             <div className="flex flex-col gap-3">
-              {['ABOUT', 'SKILLS', 'PROJECTS', 'EXPERIENCE', 'CONTACT'].map(item => (
+              {['ABOUT', 'SKILLS', 'PROJECTS', 'JOURNEY', 'CONTACT'].map(item => (
                 <a key={item} href={`#${item.toLowerCase()}`} className="text-sm font-semibold tracking-widest text-[var(--text-secondary)] hover:text-[var(--text-primary)] uppercase transition-colors w-fit focus-visible:outline-none focus-visible:text-[var(--text-primary)]">
                   {item}
                 </a>

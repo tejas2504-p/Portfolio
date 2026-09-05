@@ -35,12 +35,10 @@ export const projects: Project[] = [
     category: "AI / AUTOMATION",
     description: "An AI-powered Discord bot capable of intelligent conversations and server interactions with persistent chat memory.",
     technologies: ["Node.js", "Discord.js", "AI", "MongoDB"],
-    image: "/projects/ai-discord-bot.webp",
+    image: "/projects/bot1.jpeg",
     images: [
-      "/projects/ai-discord-bot.webp",
-      "/projects/ai-discord-bot-2.webp",
-      "/projects/ai-discord-bot-3.webp",
-      "/projects/ai-discord-bot-4.webp"
+      "/projects/bot1.jpeg",
+      "/projects/bot2.jpeg"
     ],
     githubUrl: "https://github.com/tejas2504-p/Autonomous-Discord-Agent",
     liveUrl: null,
@@ -52,12 +50,12 @@ export const projects: Project[] = [
     category: "AI / CIVIC TECHNOLOGY",
     description: "An AI-powered civic complaint management platform designed to help users submit, manage and track government grievances.",
     technologies: ["React", "Node.js", "MongoDB", "AI"],
-    image: "/projects/government-grievance.webp",
+    image: "/projects/govern1.jpeg",
     images: [
-      "/projects/government-grievance.webp",
-      "/projects/government-grievance-2.webp",
-      "/projects/government-grievance-3.webp",
-      "/projects/government-grievance-4.webp"
+      "/projects/govern1.jpeg",
+      "/projects/govern2.jpeg",
+      "/projects/govern3.jpeg",
+      "/projects/govern4.jpeg"
     ],
     githubUrl: "https://github.com/tejas2504-p/smart-civic-grievance-system",
     liveUrl: null,

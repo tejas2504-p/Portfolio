@@ -44,7 +44,7 @@ export default function Journey() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="experience" className="py-24 md:py-48 bg-[var(--background)] border-t border-[var(--border-subtle)] relative">
+    <section ref={sectionRef} id="journey" className="py-24 md:py-48 bg-[var(--background)] border-t border-[var(--border-subtle)] relative">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
         
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-16 lg:gap-8">
