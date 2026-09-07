@@ -49,7 +49,7 @@ export default function Hero() {
         <ThreeCanvas />
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 w-full relative z-10 flex flex-col justify-center h-full pointer-events-none mt-12 lg:mt-0">
+      <div className="max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24 xl:px-32 w-full relative z-10 flex flex-col justify-center h-full pointer-events-none mt-12 lg:mt-0">
         
         {/* Left Content */}
         <div className="w-full lg:w-3/5 flex flex-col relative z-20 pointer-events-none">

@@ -20,10 +20,10 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-[var(--background)]/90 backdrop-blur-md border-b border-[var(--border-subtle)] transition-all font-mono">
-      <div className="w-full flex items-center justify-between h-20">
+      <div className="w-full flex items-center justify-between h-16">
         
         {/* Left: Logo Area */}
-        <div className="flex-shrink-0 h-full flex items-center border-r border-[var(--border-subtle)] px-6 lg:px-12">
+        <div className="flex-shrink-0 h-full flex items-center border-r border-[var(--border-subtle)] px-8 md:px-16 lg:px-24 xl:px-32">
           <Link
             href="/"
             className="text-[var(--text-primary)] font-bold text-sm tracking-[0.1em]"

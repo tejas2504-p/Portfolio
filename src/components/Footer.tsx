@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="pt-20 pb-12 bg-[var(--background)] border-t border-[var(--border-subtle)] relative z-10">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+      <div className="max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24 xl:px-32">
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-16 lg:gap-8 pb-16 border-b border-[var(--border-subtle)]">
           {/* BRAND (LEFT) */}
           <div className="lg:col-span-4 flex flex-col">

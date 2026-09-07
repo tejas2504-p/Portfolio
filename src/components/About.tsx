@@ -49,7 +49,7 @@ export default function About() {
 
   return (
     <section ref={sectionRef} id="about" className="py-32 md:py-48 bg-[var(--background)] border-t border-[var(--border-subtle)] relative">
-      <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
+      <div className="max-w-[1400px] mx-auto px-8 md:px-16 lg:px-24 xl:px-32 relative z-10">
         
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-16 lg:gap-8">
           
