@@ -95,7 +95,7 @@ export default function About() {
               ME.
             </h2>
 
-            <div className="space-y-8 text-xl sm:text-2xl text-[var(--text-secondary)] font-[family-name:var(--font-para-clean)] font-light leading-relaxed max-w-2xl">
+            <div className="space-y-8 text-lg sm:text-xl text-[var(--text-secondary)] font-[family-name:var(--font-para-clean)] font-light leading-relaxed max-w-2xl">
               <p data-animate="paragraph">
                 I'm Tejas Prajapati, a <strong className="font-medium text-[var(--text-primary)]">Full-Stack Developer</strong> specializing in building scalable, high-performance web applications and digital solutions. My expertise spans frontend, backend, databases, real-time systems, AI integration, and cloud technologies.
               </p>
